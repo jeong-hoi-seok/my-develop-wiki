@@ -1,109 +1,173 @@
 ---
+id: index-index
+title: 목차
+aliases: [목차]
 type: index
-version: "0.10.3"
-updated: 2026-06-29
+status: active
+version: "0.25.0"
+created_at: 2026-06-19
+created_by: 정회석
+updated_at: 2026-07-13
+updated_by: 정회석
+audit_log:
+  - action: created
+    at: 2026-06-19
+    by: 정회석
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "relations 단방향 정리"
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "context7 필수 단계 추가, 10_raw·fsd 제거"
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "필수 작업 순서를 문서 최상단으로 재배치, 상세는 operations 문서 링크로 위임"
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "AGENTS 슬림화 버전 반영"
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "시작 전 필수에서 에이전트 전용 확인 명령 제거 — 에이전트 중립 지침으로"
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "context7 가이드 오타 정정 반영 — version 0.21.6"
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "im-not-ai 윤문 sweep·wiki-versioning 번호 정정 — version 0.21.7"
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "agent-instruction-guide 도구 활용 절·@AGENTS.md 포인터 반영 — version 0.21.8"
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "루트 CLAUDE.md를 @AGENTS.md 한 줄 포인터로 교체 — version 0.21.9"
+  - action: updated
+    at: 2026-07-02
+    by: 정회석
+    note: "commit-convention·mr-pr-guide에 AI attribution 문구 금지 추가 — version 0.21.10"
+  - action: updated
+    at: 2026-07-07
+    by: 정회석
+    note: "AGENTS 템플릿에 작업 기록·MR/PR 필수 절 신설, worklog 온디맨드를 작업 완료 시 기재로 개정 — version 0.22.0"
+  - action: updated
+    at: 2026-07-07
+    by: 정회석
+    note: "branch-strategy 신설 — 인프라 main 단일·사내 제품 prod/dev 트랙 이원화, 목차 등록"
+  - action: updated
+    at: 2026-07-07
+    by: 정회석
+    note: "package-manager 신설 — 사내 표준 pnpm, npm·yarn 확인 규칙, 목차 등록 — version 0.23.0"
+  - action: updated
+    at: 2026-07-07
+    by: 정회석
+    note: "node-version 신설 — 권장 Node 24 LTS·.nvmrc 고정, 목차 등록 — version 0.24.0"
+  - action: updated
+    at: 2026-07-07
+    by: 정회석
+    note: "package-manager·node-version em dash 표기 정리 — version 0.24.1"
+  - action: updated
+    at: 2026-07-09
+    by: 정회석
+    note: "writing-style AI 티 금지 규칙 추가, mr-pr-guide에 준수 항목 반영, version 0.24.2"
+  - action: updated
+    at: 2026-07-10
+    by: 정회석
+    note: "expo-sdk-54-pinning을 expo-sdk-version으로 개편, Expo Go 중지·SDK 56 결정 반영, version 0.24.3"
+  - action: updated
+    at: 2026-07-10
+    by: 정회석
+    note: "context7·wiki-authoring 가이드에서 expo 버전 문서 참조 제거, version 0.24.4"
+  - action: updated
+    at: 2026-07-10
+    by: 정회석
+    note: "log 주간 압축 06-24~07-02, version 0.24.5"
+  - action: updated
+    at: 2026-07-10
+    by: 정회석
+    note: "lint-format 컨벤션 추가, 목차 등록, version 0.24.6"
+  - action: updated
+    at: 2026-07-10
+    by: 정회석
+    note: "git-hooks 컨벤션 추가, 목차 등록, version 0.24.7"
+  - action: updated
+    at: 2026-07-13
+    by: 정회석
+    note: "frontend-wiki 전체 이관, 프로젝트명 my-develop-wiki 변경, version 0.25.0"
+tags: [wiki, index]
+stack: common
+scope: wiki-index
+relations: []
 ---
 
-# Index (목차)
+# my-develop-wiki
 
-프론트엔드 LLM Wiki 전체 목차. 질문에 답하기 전 먼저 읽는다. 운영 규칙은 루트 `CLAUDE.md`·`AGENTS.md`.
+유일한 진입점. 모든 작업·질문 전에 아래 필수 작업을 **순서대로** 끝낸 뒤 목차로 넘어간다.
 
-> **⚠️ 최우선 체크 — 원격 버전 동기화**
-> 이 위키를 읽으면 **가장 먼저** GitHub Release 최신 tag(`v0.0.x`)와 이 문서의 `version`(`0.0.y`)이 같은지 확인한다. 불일치 시 로컬이 오래됐을 수 있으므로 작업 전 원격을 최신화하고, fast-forward가 안 되면 임의 처리 없이 사용자에게 먼저 보고한다. 절차는 [[위키 버전 관리]]의 "원격 버전 동기화".
+## 시작 전 필수 (순서대로)
 
-> **플랫폼 표기** — `[공통]` 웹·앱 모두 적용 / `[웹]` Next.js 등 웹 전용 / `[앱]` React Native·Expo 전용 / `[웹·앱]` 양쪽 사용하나 구현 방식 상이
+1. **원격 동기화** — [[wiki-sync]]를 따라 GitHub Release 최신 tag와 이 문서 `version` 일치를 확인한다.
+2. **context7 설치 확인** — 각 에이전트가 자기 환경에 맞는 방법으로 연결을 확인하고, 미설치면 [[context7-instruction-guide]] 설치 절차를 따른다. 라이브러리·프레임워크 문서는 위키가 아니라 context7으로 조회한다.
+3. **superpowers 설치 확인** — 미설치면 [[superpowers-instruction-guide]] 설치 절차를 따른다. 이미 있으면 그대로 둔다. 실행은 개별 프로젝트에서만 한다.
+4. **Conventions·Operations 선행 학습** — 아래 목차의 Conventions·Operations 문서를 직접 열어 읽는다. 모든 작업·커밋·문서 변경의 전제.
 
-## 아키텍처
+저장소 운영 규칙 SSOT는 루트 `AGENTS.md`.
 
-- [[FSD 폴더구조]] `[공통]` — layer·slice·segment, import rule, public API로 구조화하는 선택 가능한 아키텍처 패턴
-- *(예정)* State Architecture / Data Fetching Architecture / Routing Architecture / Monorepo Architecture …
+## 목차
 
-## 개발원칙
+### 구조
 
-> 모두 `[공통]`
+```
+00_context/   개인 정적 기준 (글쓰기·사고방식)
+10_raw/       원본 보관소 (라이브러리 문서 금지 — context7로 조회)
+20_wiki/      LLM 정리본
+  ├ principles/   원칙·기준 — 아키텍처·기술 선택 이유
+  ├ conventions/  개발 전용 컨벤션 — 네이밍·코드 리뷰
+  ├ operations/   운영 규약·가이드 — 개발 외에서도 쓰는 규칙 (커밋·MR·위키·에이전트)
+  ├ index.md      이 목차 (유일한 진입점)
+  └ log.md        작업 이력 (최신순)
+```
 
-- [[코드 품질]] — 좋은 코드 4기준 허브 (토스 FF)
-  - [[가독성]] · [[예측 가능성]] · [[응집도]] · [[결합도]]
-- [[접근성]] — 4원칙 + 스크린리더 3요소
-- [[디버깅]] — 진단 → 수정 → 예방
-- [[코드 리뷰]] — 영향 범위(blast radius)·위험도 기반 리뷰, 구조화 출력, AI 리뷰 토큰 효율
+> **범위** — 버저닝이 있는 라이브러리·프레임워크 문서는 위키에 두지 않는다. 최신 문서는 **context7**으로 조회한다. 위키엔 시간이 지나도 유효한 **원칙·기준·선택 이유**만 남긴다.
 
-## 최적화
+### Principles (원칙 · 기준)
 
-- [[프론트엔드 성능 최적화]] `[웹]` — 리소스 크기·렌더링 차단·이미지·폰트·JS 실행 비용 관리 기준
+- [[expo-sdk-version]] `[앱]` — Expo Go 중지와 54 이후 SDK 버전 선택 기준
 
-## 테스트
+### Conventions (개발 전용 컨벤션)
 
-- [[단위 테스트]] `[웹]` — 목적·FIRST, 내부 구현 비검증, RTL 작성법, DAMP, 비용·효용
-- [[통합 테스트]] `[웹]` — 경계, 컴포넌트+API, 사용자 시나리오, 단위 vs 통합 선택
-- [[MSW 통합 테스트]] `[웹]` — MSW 요청 가로채기, 성공·빈·오류, 서버 상태 변경
-- [[테스트 Mock·Fixture 재사용]] `[웹]` — Storybook↔테스트 handler 재사용, fixture 중복 제거, 시나리오 자산화
-- [[시각적 회귀 테스트]] `[웹]` — 필요성, Playwright, 디자인 시스템 회귀, flaky 변동성 제어
-- [[Storybook 기반 컴포넌트 개발]] `[웹]` — CDD, Story 관리, API 상태 표현, PR Preview 리뷰
+> 개발에만 국한된 규칙. 모두 `[공통]`.
 
-## 기술개념
+- [[naming-convention]] — 변수·함수·파일 네이밍 규칙
+- [[lint-format]] — 팀 공통 ESLint+Prettier 표준, 전 프로젝트 범용 베이스, import 정렬은 Prettier 담당
+- [[git-hooks]] — Husky 규격화, pre-commit은 nano-staged 린트·포맷, pre-push는 typecheck
+- [[package-manager]] — 사내 표준 pnpm 최신 버전, npm·yarn 시도 시 실행 직전 확인
+- [[node-version]] — 권장 Node 24 LTS, `.nvmrc`·`engines` 고정, 타 버전 시도 시 실행 직전 확인
+- [[code-review]] — 리뷰 요청 시 code-review-graph 필수 사용(미설치 시 설치)·코드 품질 4기준(가독성·예측 가능성·응집도·결합도)·접근성·디버깅
 
-- `기술개념/web/` — 브라우저·DOM·Next.js·Tailwind·웹 번들러 중심 개념
-  - **프레임워크**: [[React]] · [[Next.js]] (App Router 권장안, Pages Router 차이, 12~16.2 변화)
-  - **스타일**: [[Tailwind CSS]] · [[cn & cva]]
-  - **번들링**: [[번들링]] · [[트리 쉐이킹]] · [[코드 스플리팅]] · [[HMR]]
-- `기술개념/app/` — React Native·Expo·NativeWind·네이티브 런타임 중심 개념
-  - **프레임워크·스타일**: [[React Native]] · [[Expo]] · [[NativeWind]]
-  - **런타임·빌드**: [[Metro]] (번들러) · [[Hermes]] (JS 엔진)
-  - **네이티브 연동**: [[네이티브 모듈과 Config Plugins]]
-  - **애니메이션·제스처**: [[Reanimated와 Gesture Handler]]
-- *(예정)* Layer / Slice / Segment — FSD 세부 개념 분리 검토
+### Operations (운영 규약·가이드)
 
-## 컨벤션 (Conventions)
+> 개발 외에서도 쓰이는 규약·가이드. 커밋·MR·위키 작성·버전·동기화·에이전트 연동. 모두 `[공통]`.
 
-> 모두 `[공통]`
+- [[commit-convention]] — `type(scope): subject` 커밋 메시지 규칙 (코드·위키 공용)
+- [[mr-pr-guide]] — GitLab MR / GitHub PR 작성 절차 (위키 MR 템플릿 포함)
+- [[branch-strategy]] — 프로젝트 유형별 브랜치 전략 (인프라 main 단일 트랙 · 사내 제품 prod/dev 트랙)
 
-- [[네이밍 컨벤션]] — 변수·함수·파일 네이밍 규칙
-- [[커밋 컨벤션]] — `type(scope): subject` 커밋 메시지 규칙
-- [[MR PR 작성 가이드]] — GitLab MR / GitHub PR 작성 절차
-- [[프로젝트 맥락 위키 작성 가이드]] — 개별 프로젝트에서 `docs/20_wiki/`(summaries·decisions·worklog)와 `docs/10_raw/`를 나누는 방법 (Obsidian 외부용)
-- [[위키 버전 관리]] — `20_wiki/index.md`의 `version` 값을 올리는 기준과 절차
-- [[AGENTS.md 작성 가이드]] — 신규 프로젝트 AGENTS.md 작성·검증 기준과 `$HOME/.llm-wiki` 위키 부트스트랩
-
-## 디자인시스템
-
-- [[AI 티 나는 디자인의 기준]] `[공통]` — AI가 만든 티가 많이 나는 디자인 패턴
-- [[헤드리스 컴포넌트]] `[공통]` — 로직·접근성만 공통, UI는 위임
-- [[shadcn-ui]] `[웹]` — Radix/Base UI(헤드리스) + Tailwind 복붙 소유 모델
-- [[Base UI]] `[웹]` — 접근성 있는 unstyled React primitive
-- *(예정)* Component API Design / Design Token / Storybook …
-
-## 기술비교
-*(필요 시 생성)*
-- FSD vs Atomic Design / Headless vs Styled / Monorepo vs Polyrepo …
-
-## 기술결정
-
-- [[Next.js를 사용하는 이유]] `[웹]` — React 웹 앱에서 Next.js를 채택하는 기준
-- [[Biome을 사용하는 이유]] `[공통]` — ESLint + Prettier 대신 Biome을 우선 검토하는 기준
-- [[shadcn-ui와 Base UI 선택 기준]] `[웹]` — shadcn-ui 선택 이유와 Base UI 기반 판단 기준
-- [[공통 컴포넌트 추출 기준]] `[공통]` (공통 컴포넌트 추출·유지·폐기 기준)
-- [[Expo SDK 54 버전 고정]] `[앱]` (왜 Expo SDK 54.0.35로 고정하나 — Expo Go·App Store·레거시 아키텍처)
-- [[LLM Wiki와 옵시디언으로 프론트엔드 작업 자동화하기]] `[공통]` — 공통 지식은 옵시디언 상위 스토어, 프로젝트 고유 기록만 각 저장소로 분리한 도입기 (강제/수동 학습)
-- *(예정)* Data Fetching Strategy …
-
-## summaries (원문요약)
-
-- [[Feature-Sliced Design 공식 문서 요약]] `[공통]` — FSD 공식 한국어 문서 요약
-- [[카카오페이 공통 컴포넌트 요약]] `[웹]` — 카카오페이 공통 컴포넌트 생애주기
-- 토스 Frontend Fundamentals `[웹]`:
-  - [[토스 코드 품질 요약]] (좋은 코드 4기준) · [[토스 접근성 요약]] (접근성) · [[토스 번들링 요약]] (번들링) · [[토스 디버깅 요약]] (디버깅)
-  - [[Frontend Fundamentals]] — 원문 135개 직접 참조 인덱스
-  - [[기술 문서 작성 규칙]] `[공통]` — 기술 문서 작성 규칙 (문서 유형·구조·문장 원칙)
-- [[Front-End Performance Checklist 요약]] `[웹]` — 프론트엔드 성능 체크리스트에서 범용 항목만 추린 요약
-- [[code-review-graph 요약]] `[공통]` — AST 그래프 기반 AI 코드 리뷰 도구. 영향 범위·토큰 절감·MCP 통합·CLI
-- 프론트엔드 테스트 자료 `[웹]`:
-  - [[우아한형제들 단위 테스트 시리즈 요약]] · [[우아한형제들 통합 테스트 요약]] · [[카카오엔터 MSW 통합 테스트 요약]]
-  - [[카카오엔터 MSW 모킹 재사용 요약]] · [[우아한형제들 시각적 회귀 테스트 요약]] · [[29CM Storybook 운영 방식 요약]]
-
-## 템플릿
-
-- [[기술개념 템플릿]] `[공통]`
-- [[기술결정 템플릿]] `[공통]`
-- [[기술비교 템플릿]] `[공통]`
-- [[원문요약 템플릿]] `[공통]`
+- [[context7-instruction-guide]] `context7 사용 가이드` — 라이브러리·프레임워크 문서는 위키 저장 대신 context7(MCP) 조회
+- [[wiki-authoring-guide]] `위키 작성 가이드` — 파일명(영문 kebab-case)·frontmatter(id·status·audit_log·relations 등)·경로 표기 표준
+- [[log-writing-guide]] `로그 작성 규칙` — log·worklog 작성·압축 표준 (일자 기준·간결·괄호 금지·주간→월간 압축)
+- [[wiki-versioning]] — `version` 올리는 기준·절차
+- [[wiki-sync]] — 로컬↔원격(`origin/main`) 동기화
+- [[project-wiki-guide]] — 개별 프로젝트는 `docs/raw/`(선택)·`docs/worklog.md`(필수)만
+- [[agent-instruction-guide]] — 프로젝트 `AGENTS.md` 작성·위키 부트스트랩
+- [[superpowers-instruction-guide]] `superpowers 사용 가이드` — 개별 프로젝트 전용 프로세스 스킬 플러그인, 설치·gitignore·우선 호출 규칙
