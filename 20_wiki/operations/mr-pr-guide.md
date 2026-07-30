@@ -60,7 +60,7 @@ GitLab(MR)·GitHub(PR) 공통 규칙. AI가 리뷰 요청을 작성할 때 따�
 
 본문은 위 표 경로의 템플릿 파일을 열어 그 구조대로 작성한다.
 
-- **템플릿 선택**: 기본은 `Default.md`. [[branch-strategy]]의 최상위 브랜치로 올리는 릴리즈 MR, 제품 트랙 기준 `dev` → `prod`는 `Release.md`를 쓴다.
+- **템플릿 선택**: 기본은 `Default.md`. [[branch-strategy]]의 릴리즈 MR, 즉 `dev` → `main`은 `Release.md`를 쓴다.
 - **없으면 설치**: 프로젝트에 템플릿 파일이 없으면 위키의 [10_raw/merge_request_templates/](/10_raw/merge_request_templates/) 폴더에 있는 파일 전부를 위 표 경로 폴더에 복사해 설치한 뒤 작성한다. 설치한 템플릿 파일도 함께 커밋한다.
 
 ## 작업 규칙

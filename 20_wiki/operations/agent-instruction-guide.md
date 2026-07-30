@@ -106,10 +106,10 @@ flowchart TD
 
 ## git 규칙 (필수)
 
-보호 브랜치(`main`·`dev`·`prod`)에 직접 커밋·push 금지(예외 없음). "커밋/푸시 해줘"만 말해도 묻지 말고 작업 브랜치부터 만든다.
+보호 브랜치(`main`·`dev`)에 직접 커밋·push 금지(예외 없음). "커밋/푸시 해줘"만 말해도 묻지 말고 작업 브랜치부터 만든다.
 브랜치 전략은 `./my-develop-wiki/20_wiki/operations/branch-strategy.md`를 따른다 —
-인프라·위키 저장소는 main 단일 트랙, 사내 제품 프로젝트는 prod/dev 트랙.
-커밋 전 `git branch --show-current`로 확인하고, 보호 브랜치면 트랙에 맞는
+`main`·`dev` 두 브랜치를 쓰고 변경은 작업 브랜치 → MR로 반영한다.
+커밋 전 `git branch --show-current`로 확인하고, 보호 브랜치면
 작업 브랜치를 만들어 이동한 뒤 진행한다. 반영은 작업 브랜치 → PR/MR.
 
 ## 작업 기록 (필수)

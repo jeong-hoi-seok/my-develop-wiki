@@ -4,7 +4,7 @@ title: 목차
 aliases: [목차]
 type: index
 status: active
-version: "0.26.0"
+version: "0.27.0"
 created_at: 2026-06-19
 created_by: 정회석
 updated_at: 2026-07-30
@@ -108,6 +108,10 @@ audit_log:
     at: 2026-07-30
     by: 정회석
     note: "frontend-wiki 재싱크 — lint-format js/ts.* 키 교체·mr-pr-guide 템플릿 사용 절·릴리즈 MR 제목 반영, 위키 실체 경로를 ~/my-develop-wiki로 정정(project/ 제거), version 0.26.0"
+  - action: updated
+    at: 2026-07-30
+    by: 정회석
+    note: "개인 위키 브랜치 전략을 main+dev 단일 전략으로 정리, 제품 prod/dev 트랙·hotfix·dionz 출처 제거, agent-instruction-guide·mr-pr-guide 참조 정합, version 0.27.0"
 tags: [wiki, index]
 stack: common
 scope: wiki-index
@@ -165,7 +169,7 @@ relations: []
 
 - [[commit-convention]] — `type(scope): subject` 커밋 메시지 규칙 (코드·위키 공용)
 - [[mr-pr-guide]] — GitLab MR / GitHub PR 작성 절차 (위키 MR 템플릿 포함)
-- [[branch-strategy]] — 프로젝트 유형별 브랜치 전략 (인프라 main 단일 트랙 · 사내 제품 prod/dev 트랙)
+- [[branch-strategy]] — git 브랜치 전략 (main · dev 두 브랜치, 작업 브랜치 → MR)
 
 - [[context7-instruction-guide]] `context7 사용 가이드` — 라이브러리·프레임워크 문서는 위키 저장 대신 context7(MCP) 조회
 - [[wiki-authoring-guide]] `위키 작성 가이드` — 파일명(영문 kebab-case)·frontmatter(id·status·audit_log·relations 등)·경로 표기 표준
