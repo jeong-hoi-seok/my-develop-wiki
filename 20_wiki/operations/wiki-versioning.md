@@ -6,7 +6,7 @@ type: operation
 status: active
 created_at: 2026-06-25
 created_by: 정회석
-updated_at: 2026-07-13
+updated_at: 2026-07-02
 updated_by: 정회석
 audit_log:
   - action: created
@@ -23,10 +23,6 @@ audit_log:
     at: 2026-07-02
     by: 정회석
     note: "작업 절차 번호 7 누락 정정, 8·9를 7·8로"
-  - action: updated
-    at: 2026-07-13
-    by: 정회석
-    note: "my-develop-wiki 이관에 따른 프로젝트명·경로·원격 URL 참조 갱신"
 tags: [common, convention, wiki, version]
 stack: common
 scope: wiki-versioning

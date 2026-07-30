@@ -6,7 +6,7 @@ type: operation
 status: draft
 created_at: 2026-06-19
 created_by: 정회석
-updated_at: 2026-07-13
+updated_at: 2026-07-07
 updated_by: 정회석
 audit_log:
   - action: created
@@ -43,10 +43,6 @@ audit_log:
     at: 2026-07-07
     by: 정회석
     note: "템플릿 git 규칙을 보호 브랜치 일반화, branch-strategy 문서 참조 추가 — main 단일 가정 제거"
-  - action: updated
-    at: 2026-07-13
-    by: 정회석
-    note: "my-develop-wiki 이관에 따른 프로젝트명·경로·원격 URL 참조 갱신"
 tags: [common, convention, agent]
 stack: common
 scope: agent-instruction-authoring
@@ -63,8 +59,8 @@ relations:
 
 ```mermaid
 flowchart TD
-    A[작업 시작] --> B{"위키 실체<br/>$HOME/project/my-develop-wiki 있나?"}
-    B -- 없음 --> C["git clone<br/>→ $HOME/project/my-develop-wiki"]
+    A[작업 시작] --> B{"위키 실체<br/>$HOME/my-develop-wiki 있나?"}
+    B -- 없음 --> C["git clone<br/>→ $HOME/my-develop-wiki"]
     B -- 있음 --> D
     C --> D{"프로젝트 루트<br/>./my-develop-wiki 링크 있나?"}
     D -- 없음 --> E["심볼릭링크 생성<br/>+ .gitignore 등록"]
@@ -138,7 +134,7 @@ flowchart TD
 
 ## 위키 연동
 
-위키 실체는 **`$HOME/project/my-develop-wiki` 한 곳**에만 둔다. 프로젝트마다 복제하지 않는다. 프로젝트 루트에는 그곳을 가리키는 심볼릭링크 **`./my-develop-wiki`**만 만들고, 항상 상대경로 `./my-develop-wiki/...`로 읽는다. (`$HOME`·`~`·절대경로를 읽기 도구에 넘기지 않는다 — 링크가 머신 차이를 흡수한다.)
+위키 실체는 **`$HOME/my-develop-wiki` 한 곳**에만 둔다. 프로젝트마다 복제하지 않는다. 프로젝트 루트에는 그곳을 가리키는 심볼릭링크 **`./my-develop-wiki`**만 만들고, 항상 상대경로 `./my-develop-wiki/...`로 읽는다. (`$HOME`·`~`·절대경로를 읽기 도구에 넘기지 않는다 — 링크가 머신 차이를 흡수한다.)
 
 - repo: `https://github.com/jeong-hoi-seok/my-develop-wiki.git`
 - 읽기 진입점: `./my-develop-wiki/20_wiki/index.md`
@@ -148,18 +144,18 @@ flowchart TD
 **① 위키가 아예 없음** — clone부터.
 
 ```bash
-git clone https://github.com/jeong-hoi-seok/my-develop-wiki.git "$HOME/project/my-develop-wiki"
+git clone https://github.com/jeong-hoi-seok/my-develop-wiki.git "$HOME/my-develop-wiki"
 ```
 
 **② 위키는 있는데 링크 미설정** — 프로젝트 루트에서 링크 생성.
 
 ```bash
 # macOS / Linux / WSL
-ln -sf "$HOME/project/my-develop-wiki" ./my-develop-wiki
+ln -sf "$HOME/my-develop-wiki" ./my-develop-wiki
 ```
 ```powershell
 # Windows PowerShell (관리자)
-New-Item -Force -ItemType SymbolicLink -Path .\my-develop-wiki -Target "$HOME\project\my-develop-wiki"
+New-Item -Force -ItemType SymbolicLink -Path .\my-develop-wiki -Target "$HOME\my-develop-wiki"
 ```
 
 - 프로젝트 `.gitignore`에 아래를 등록한다. `my-develop-wiki` 링크는 머신마다 재생성되고, superpowers 산출물은 git에 올리지 않는다([[superpowers-instruction-guide]]).
@@ -171,6 +167,6 @@ New-Item -Force -ItemType SymbolicLink -Path .\my-develop-wiki -Target "$HOME\pr
   ```
 - `./my-develop-wiki/20_wiki/index.md`가 실제로 열리는지 검증한다(링크 존재만으로 갈음 금지).
 
-**③ 연동 완료** — `index.md`가 바로 열리면 superpowers 설치를 확인하고(`claude plugin list | grep -i superpowers`, 미설치면 [[superpowers-instruction-guide]] 설치 절차, 이미 있으면 그대로) 그 문서를 읽고 작업을 시작한다. (필요 시 `git -C "$HOME/project/my-develop-wiki" pull --ff-only`로 최신화.) 이어서 사용자에게 **"개별 프로젝트 위키도 지금 만들까요?"**라고 물어본다([[project-wiki-guide]]).
+**③ 연동 완료** — `index.md`가 바로 열리면 superpowers 설치를 확인하고(`claude plugin list | grep -i superpowers`, 미설치면 [[superpowers-instruction-guide]] 설치 절차, 이미 있으면 그대로) 그 문서를 읽고 작업을 시작한다. (필요 시 `git -C "$HOME/my-develop-wiki" pull --ff-only`로 최신화.) 이어서 사용자에게 **"개별 프로젝트 위키도 지금 만들까요?"**라고 물어본다([[project-wiki-guide]]).
 
 clone·링크·검증 중 하나라도 실패하면 사실을 말하고 중단한다.

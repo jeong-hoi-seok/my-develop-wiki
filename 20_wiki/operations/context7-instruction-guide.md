@@ -6,7 +6,7 @@ type: operation
 status: active
 created_at: 2026-07-02
 created_by: 정회석
-updated_at: 2026-07-13
+updated_at: 2026-07-10
 updated_by: 정회석
 audit_log:
   - action: created
@@ -40,10 +40,6 @@ audit_log:
     at: 2026-07-10
     by: 정회석
     note: "expo 버전 문서 참조·relations 제거, 운영 가이드에서 특정 기술 결정 분리"
-  - action: updated
-    at: 2026-07-13
-    by: 정회석
-    note: "my-develop-wiki 이관에 따른 프로젝트명·경로·원격 URL 참조 갱신"
 tags: [common, operation, context7, mcp, docs]
 stack: common
 scope: context7-instruction

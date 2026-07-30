@@ -6,7 +6,7 @@ type: operation
 status: active
 created_at: 2026-06-30
 created_by: 정회석
-updated_at: 2026-07-13
+updated_at: 2026-07-02
 updated_by: 정회석
 audit_log:
   - action: created
@@ -15,10 +15,6 @@ audit_log:
   - action: updated
     at: 2026-07-02
     by: 정회석
-  - action: updated
-    at: 2026-07-13
-    by: 정회석
-    note: "my-develop-wiki 이관에 따른 프로젝트명·경로·원격 URL 참조 갱신"
 tags: [common, convention, wiki, sync]
 stack: common
 scope: wiki-sync

@@ -4,10 +4,10 @@ title: 목차
 aliases: [목차]
 type: index
 status: active
-version: "0.25.0"
+version: "0.26.0"
 created_at: 2026-06-19
 created_by: 정회석
-updated_at: 2026-07-13
+updated_at: 2026-07-30
 updated_by: 정회석
 audit_log:
   - action: created
@@ -104,6 +104,10 @@ audit_log:
     at: 2026-07-13
     by: 정회석
     note: "frontend-wiki 전체 이관, 프로젝트명 my-develop-wiki 변경, version 0.25.0"
+  - action: updated
+    at: 2026-07-30
+    by: 정회석
+    note: "frontend-wiki 재싱크 — lint-format js/ts.* 키 교체·mr-pr-guide 템플릿 사용 절·릴리즈 MR 제목 반영, 위키 실체 경로를 ~/my-develop-wiki로 정정(project/ 제거), version 0.26.0"
 tags: [wiki, index]
 stack: common
 scope: wiki-index

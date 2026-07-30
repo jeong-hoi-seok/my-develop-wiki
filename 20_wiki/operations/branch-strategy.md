@@ -6,7 +6,7 @@ type: operation
 status: active
 created_at: 2026-07-07
 created_by: 정회석
-updated_at: 2026-07-13
+updated_at: 2026-07-07
 updated_by: 정회석
 audit_log:
   - action: created
@@ -17,10 +17,6 @@ audit_log:
     at: 2026-07-07
     by: 정회석
     note: "병합 방식 Squash 후 FF로 통일, 브랜치 보호 표·Rebase 규칙 삭제 등 문서 단순화"
-  - action: updated
-    at: 2026-07-13
-    by: 정회석
-    note: "my-develop-wiki 이관에 따른 프로젝트명·경로·원격 URL 참조 갱신"
 tags: [common, operation, git, branch]
 stack: common
 scope: branch-strategy
