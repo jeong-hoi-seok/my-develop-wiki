@@ -6,7 +6,7 @@ type: operation
 status: active
 created_at: 2026-06-24
 created_by: 정회석
-updated_at: 2026-07-13
+updated_at: 2026-07-07
 updated_by: 정회석
 audit_log:
   - action: created
@@ -27,10 +27,6 @@ audit_log:
     at: 2026-07-07
     by: 정회석
     note: "worklog 온디맨드 기록을 작업 완료 시 기재로 개정, 파일 생성은 여전히 사용자 동의 필수"
-  - action: updated
-    at: 2026-07-13
-    by: 정회석
-    note: "my-develop-wiki 이관에 따른 프로젝트명·경로·원격 URL 참조 갱신"
 tags: [common, convention, wiki, documentation, agent]
 stack: common
 scope: project-wiki-authoring

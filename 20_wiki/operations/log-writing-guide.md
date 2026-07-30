@@ -6,7 +6,7 @@ type: operation
 status: active
 created_at: 2026-07-01
 created_by: 정회석
-updated_at: 2026-07-13
+updated_at: 2026-07-02
 updated_by: 정회석
 last_verified_at: 2026-07-02
 last_verified_by: 정회석
@@ -23,10 +23,6 @@ audit_log:
     at: 2026-07-02
     by: 정회석
     note: "프론트/백엔드 로그 규칙 통일 — 버전 version X.Y.Z 표기, 압축 항목 collapsed 마커 도입"
-  - action: updated
-    at: 2026-07-13
-    by: 정회석
-    note: "my-develop-wiki 이관에 따른 프로젝트명·경로·원격 URL 참조 갱신"
 tags: [common, operation, wiki, log]
 stack: common
 scope: log-authoring

@@ -6,17 +6,23 @@ type: convention
 status: active
 created_at: 2026-07-10
 created_by: 정회석
-updated_at: 2026-07-10
+updated_at: 2026-07-13
 updated_by: 정회석
 audit_log:
   - action: created
     at: 2026-07-10
     by: 정회석
     note: "2026-07-10 프론트팀 회의 결정. 사내 공용 ESLint+Prettier 표준에 consistent-type-imports 추가"
+  - action: updated
+    at: 2026-07-13
+    by: 정회석
+    note: "VSCode deprecated 설정 typescript.tsdk를 js/ts.tsdk.path로 교체, 워크스페이스 TS 승인 프롬프트 설정 추가"
 tags: [common, convention, eslint, prettier, lint, format]
 stack: common
 scope: lint-format
-source: "https://typescript-eslint.io/rules/consistent-type-imports (조회 2026-07-10)"
+source:
+  - "https://typescript-eslint.io/rules/consistent-type-imports (조회 2026-07-10)"
+  - "microsoft/vscode extensions/typescript-language-features/package.json (조회 2026-07-13)"
 relations:
   - id: convention-naming-convention
     label: related
@@ -225,10 +231,13 @@ pnpm-lock.yaml
     "typescriptreact"
   ],
   "eslint.workingDirectories": [{ "mode": "auto" }],
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "prettier.requireConfig": true
 }
 ```
+
+VSCode가 JS·TS 설정을 `js/ts.*` 네임스페이스로 통합하면서 `typescript.tsdk`와 `typescript.enablePromptUseWorkspaceTsdk`는 deprecated 됐다. 옛 키도 아직 동작하지만 설정 파일에 경고가 표시된다. 구버전 VSCode를 쓰는 팀원이 있으면 과도기 동안 옛 키를 함께 둬도 된다.
 
 확장이 없으면 위 설정은 아무 동작도 하지 않는다. `.vscode/extensions.json`을 함께 커밋해 설치를 유도한다.
 
@@ -245,7 +254,8 @@ pnpm-lock.yaml
 | `editor.codeActionsOnSave` | 저장 시 ESLint 자동 수정 실행. 포맷과 별개로 코드 품질 수정 담당 |
 | `eslint.validate` | JS·JSX·TS·TSX 전부 ESLint 검사 대상으로 지정 |
 | `eslint.workingDirectories: auto` | ESLint 실행 기준 폴더를 자동 인식. 하위 폴더에 별도 설정이 있는 구조에서도 동작 |
-| `typescript.tsdk` | 에디터가 전역 TS 대신 프로젝트에 설치된 TS 버전을 쓴다. 버전 차이로 인한 오탐 방지 |
+| `js/ts.tsdk.path` | 에디터가 내장 TS 대신 프로젝트에 설치된 TS 버전을 쓴다. 버전 차이로 인한 오탐 방지 |
+| `js/ts.tsdk.promptToUseWorkspaceVersion` | 워크스페이스 TS 버전 사용을 물어보는 프롬프트 표시. 워크스페이스 tsdk는 보안상 사용자가 승인해야 적용되므로 이 프롬프트로 전환을 유도한다 |
 | `prettier.requireConfig` | Prettier 설정 파일이 있는 프로젝트에서만 포맷 동작. 팀 설정 없는 곳에서 확장 기본값으로 제멋대로 바꾸는 사고 방지 |
 
 

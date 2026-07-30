@@ -59,11 +59,11 @@ my-develop-wiki/
 
 ## 다른 프로젝트와 연동
 
-이 위키의 실체는 `~/project/my-develop-wiki` 한 곳에만 둡니다.
+이 위키의 실체는 `~/my-develop-wiki` 한 곳에만 둡니다.
 
 다른 프로젝트는 복제본 대신 루트에 `my-develop-wiki` 심볼릭링크를 만듭니다.
 그리고 `./my-develop-wiki/...` 상대경로로 참조합니다.
 
-- my-develop-wiki 저장소(`~/project/my-develop-wiki`)는 GitHub에 정상 커밋·push합니다.
+- my-develop-wiki 저장소(`~/my-develop-wiki`)는 GitHub에 정상 커밋·push합니다.
 - 소비 프로젝트의 심볼릭링크는 머신마다 깨지는 포인터입니다.
   해당 프로젝트 git에 올리지 않습니다 (`.gitignore`에 `my-develop-wiki` 필수).

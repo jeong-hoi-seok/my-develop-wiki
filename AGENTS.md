@@ -20,9 +20,9 @@
 
 ## 프로젝트 연동
 
-위키 실체는 **`~/project/my-develop-wiki` 한 곳**에만 두고, 다른 프로젝트는 심볼릭링크로 참조한다(링크는 커밋 금지). 연동·부트스트랩·`.gitignore`·`AGENTS.md` 템플릿은 [[agent-instruction-guide]]가 SSOT다.
+위키 실체는 **`~/my-develop-wiki` 한 곳**에만 두고, 다른 프로젝트는 심볼릭링크로 참조한다(링크는 커밋 금지). 연동·부트스트랩·`.gitignore`·`AGENTS.md` 템플릿은 [[agent-instruction-guide]]가 SSOT다.
 
-**위치 점검 (필수)** — 작업 전 my-develop-wiki 저장소가 `$HOME/project/my-develop-wiki`인지 확인한다. 다른 경로면 링크가 깨지고 상대경로가 어긋나므로 `$HOME`으로 옮기라고 권유한다. 사용자가 거부하면 현재 경로로 진행하되 표준이 아님을 계속 인지시킨다.
+**위치 점검 (필수)** — 작업 전 my-develop-wiki 저장소가 `$HOME/my-develop-wiki`인지 확인한다. 다른 경로면 링크가 깨지고 상대경로가 어긋나므로 `$HOME`으로 옮기라고 권유한다. 사용자가 거부하면 현재 경로로 진행하되 표준이 아님을 계속 인지시킨다.
 
 ## 기본 원칙
 
