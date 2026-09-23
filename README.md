@@ -1,69 +1,45 @@
 # my-develop-wiki
 
-개발 지식을 Markdown으로 모아두는 개인 지식 베이스입니다.
+개발 지식과 판단 기준을 모아두는 개인 위키입니다. 프로젝트에서 다시 쓸 기준과 작업의 이유를 정리합니다.
 
-블로그, 공식 문서, 기술 인터뷰 같은 원본 자료를 모읍니다.
-AI 에이전트가 이를 읽어 재사용 가능한 개념·원칙·판단 기준 문서로 정리합니다.
+모든 작업의 진입점은 [20_wiki/index.md](/20_wiki/index.md), 에이전트 운영 규칙은 [AGENTS.md](/AGENTS.md)입니다. 개인 글쓰기·사고방식은 `/00_context/`에 둡니다.
 
-특정 프로젝트의 규칙 저장소가 아닙니다.
-여러 프로젝트의 `docs/` 품질을 높이는 공통 지식층으로 씁니다.
+## 구조
 
-방식 출처: [Andrej Karpathy, LLM Wiki gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
-
-## 폴더 구조
-
-```
+```text
 my-develop-wiki/
-├── 00_context/   개인 정적 기준 (글쓰기 스타일, 사고방식)
-├── 20_wiki/      AI가 정리한 지식층 (실제 위키 본문)
-├── AGENTS.md     모든 AI 에이전트의 운영 규칙 (SSOT)
-└── CLAUDE.md     Claude 전용 진입 파일, AGENTS.md로 위임
+├── 00_context/         개인 글쓰기·사고방식
+├── 10_raw/             보존할 원본 자료
+├── 20_wiki/
+│   ├── principles/     원칙·기술 선택 기준
+│   ├── conventions/    개발 전용 규칙
+│   ├── operations/     작성·Git·에이전트 운영
+│   └── index.md        유일한 진입점
+├── docs/worklog/
+│   ├── README.md       작성·조회 안내
+│   └── YYYY-MM/
+│       └── YYYY-MM-DD-<주제>-<식별자>.md
+├── README.md           저장소 소개
+├── AGENTS.md           에이전트 운영 규칙
+└── CLAUDE.md           AGENTS.md 포인터
 ```
 
-### `/00_context/`
+## 문서와 기록
 
-개인의 잘 바뀌지 않는 기준을 둡니다.
+지식 분류는 세 폴더와 index 목차로 관리합니다. 중요한 개념은 `[[파일명]]`으로 연결합니다. 버전별 라이브러리 사용법은 복사하지 않고 Context7과 공식 문서로 조회합니다.
 
-에이전트가 응답·글쓰기 톤을 맞출 때 참고합니다.
+작업 이유·선택·검증 한계는 변경 단위 worklog에 남깁니다. 단순 조회는 기록하지 않고, 과거 기록을 읽을 때도 필요한 것만 찾습니다. 작성·조회 안내는 [docs/worklog/README.md](/docs/worklog/README.md)를 따릅니다. 과거 기록도 월별 worklog 파일에서 조회합니다.
 
-### `/20_wiki/`
+`/10_raw/`에는 다시 확인할 원문을 보관합니다. 현재 적용할 기준은 `/20_wiki/`와 대상 프로젝트 지침에서 확인합니다.
 
-위키의 본문입니다.
+## 개인 프로젝트 연동
 
-**무조건 [20_wiki/index.md](/20_wiki/index.md)부터 읽으세요.**
-폴더 트리가 아니라 그 목차가 전체 지도이자 유일한 진입점입니다.
+위키 실체는 `~/my-develop-wiki` 한 곳에 둡니다. 소비 프로젝트 루트에 `my-develop-wiki` 심볼릭링크를 만들고 `./my-develop-wiki/20_wiki/index.md`부터 읽습니다. 링크는 소비 프로젝트의 `.gitignore`에 등록하고 커밋하지 않습니다.
 
-폴더는 3개뿐인 저장통입니다.
-세부 분류(개발원칙, 기술결정 등)는 `index.md` 제목으로만 표현합니다.
-링크는 `[[파일명]]` 기준이라 경로와 무관합니다.
+연동·기록 도입 절차는 [20_wiki/operations/agent-instruction-guide.md](/20_wiki/operations/agent-instruction-guide.md)를 따릅니다. 위키는 재사용할 기준이며, 소비 프로젝트의 실제 지침이 우선합니다.
 
-안에 들어가는 것:
+## 변경 반영
 
-- `principles/`
-  왜 이렇게 하나(원칙·기준). 아키텍처(FSD) 채택 기준, 기술 선택 이유 같은 판단·기준 성격의 간결한 문서.
-  버저닝이 있는 라이브러리·프레임워크 문서는 위키에 두지 않고 context7으로 조회합니다.
-- `conventions/`
-  개발에만 국한된 규칙. 네이밍, 개발원칙을 통합한 `코드 리뷰`.
-- `operations/`
-  개발 외에서도 쓰이는 운영 규약·가이드. 커밋, MR, 문서 작성 표준, 버전 관리, 동기화, 에이전트 연동.
-- `index.md`
-  위키 전체 목차이자 유일한 진입점. 모든 작업·질문 전 먼저 읽습니다.
-- `log.md`
-  무엇을, 왜 바꿨는지 최신순으로 쌓는 작업 이력.
+이 저장소는 GitHub에서 작업 브랜치 → `main` PR → 사용자 squash merge로 반영합니다. 개인 앱의 `main`·`dev` 운영과 구분합니다. 커밋·push·PR·tag·Release는 요청받은 단계만 실행합니다.
 
-## 사용 방법
-
-- 라이브러리·프레임워크 문서는 위키에 저장하지 않고 context7으로 조회합니다.
-- AI 에이전트는 판단·기준·규칙을 `/20_wiki/`에 정리 문서로 만들거나 갱신합니다.
-- 작업 규칙은 `AGENTS.md`가 단일 기준입니다. 작업 전 반드시 먼저 읽습니다.
-
-## 다른 프로젝트와 연동
-
-이 위키의 실체는 `~/my-develop-wiki` 한 곳에만 둡니다.
-
-다른 프로젝트는 복제본 대신 루트에 `my-develop-wiki` 심볼릭링크를 만듭니다.
-그리고 `./my-develop-wiki/...` 상대경로로 참조합니다.
-
-- my-develop-wiki 저장소(`~/my-develop-wiki`)는 GitHub에 정상 커밋·push합니다.
-- 소비 프로젝트의 심볼릭링크는 머신마다 깨지는 포인터입니다.
-  해당 프로젝트 git에 올리지 않습니다 (`.gitignore`에 `my-develop-wiki` 필수).
+위키 방식의 기존 출처: [Andrej Karpathy, LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f).

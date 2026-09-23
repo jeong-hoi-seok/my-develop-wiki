@@ -6,7 +6,7 @@ type: operation
 status: active
 created_at: 2026-06-25
 created_by: 정회석
-updated_at: 2026-07-02
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
@@ -23,27 +23,36 @@ audit_log:
     at: 2026-07-02
     by: 정회석
     note: "작업 절차 번호 7 누락 정정, 8·9를 7·8로"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "기록 전용 none·같은 변경의 버전 확정·GitHub 발행과 사용자 병합 경계 반영"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사용자 요청에 따른 외부 저장소 식별정보와 비교 문구 제거"
 tags: [common, convention, wiki, version]
 stack: common
 scope: wiki-versioning
+source:
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations:
   - id: index-index
     label: related
   - id: operation-agent-instruction-guide
     label: related
 ---
-
 # 위키 버전 관리
 
 ## 한 줄 요약
 
-위키 버전은 [20_wiki/index.md](/20_wiki/index.md) frontmatter의 `version` 값으로 관리한다. 형식은 SemVer를 빌려온다.
+위키 버전은 [20_wiki/index.md](/20_wiki/index.md) frontmatter의 `version` 값으로 관리한다. 버전 대상 변경은 해당 변경 PR에서 버전 숫자를 확정한다. 사용자 병합 후 발행 요청을 받으면 그 커밋에 tag와 GitHub Release를 만든다. 형식은 SemVer를 빌려온다.
 
 ```txt
 MAJOR.MINOR.PATCH
 ```
 
-1.0 전까지는 `0.MINOR.PATCH`를 쓰고, `1.0.0`은 팀 공유 기준선이 안정됐을 때만 올린다(기준은 아래 [1.0.0 기준](#100-기준) 참고).
+1.0 전까지는 `0.MINOR.PATCH`를 쓰고, `1.0.0`은 개인 위키의 운영 기준선이 안정됐을 때만 올린다(기준은 아래 [1.0.0 기준](#100-기준) 참고).
 
 ## 올리는 기준
 
@@ -59,7 +68,7 @@ MAJOR.MINOR.PATCH
 2. **대형 ingest.** 새 raw 묶음으로 개념 문서 3개 이상 신설 + index 연결.
 3. **작동 방식 구조 변경.** 판정 질문 = "이 변경 후 에이전트가 실제로 다르게 동작하나?" YES면 `minor`. (예: ingest 흐름 단계 추가·삭제, 폴더 역할 재정의, 경로 resolver 도입, 새 필수 선행 읽기 규칙)
 
-### PATCH — 그 외 파일 변경 전부
+### PATCH — 버전 대상인 나머지 변경
 
 | 변경 | 예시 |
 |---|---|
@@ -69,9 +78,11 @@ MAJOR.MINOR.PATCH
 | 판단 기준 조정 | 기술결정 결론 변경, 컨벤션 문구 수정 |
 | 기존 문서 보강 | 설명·예시·출처 추가 (양 많아도 patch) |
 | 오탈자·표현 수정 | 의미 변화 없는 정리 |
-| 링크·index·log 보정 | 누락 링크, 오래된 목차 갱신 |
+| 현재 안내·목차 보정 | 누락 링크, 오래된 목차 갱신 |
 
-파일 변경 없는 단순 질문 답변은 **버전 변경 없음**.
+### NONE — 기록만 변경
+
+단순 질문 답변, 작업 기록의 추가·정정·검증 결과 보완, 내용과 운영 규칙을 바꾸지 않는 과거 기록 이관은 `none`이다. 기록만 바뀌면 `index.md`·공용 README·버전을 갱신하지 않는다. 작성 정책·메타데이터 규칙·도입 방식 자체를 바꾸면 `patch` / `minor` 기준으로 판단한다.
 
 ### 경계 케이스
 
@@ -85,25 +96,27 @@ MAJOR.MINOR.PATCH
 
 ### 릴리즈 케이던스
 
-- `patch`는 **누적**한다. 매 편집마다 tag·release를 만들지 않는다.
-- 릴리즈 시점: `minor` 발생 시, 또는 `patch`가 쌓여 한 묶음으로 의미가 생길 때.
+- 기록만 추가·정정하면 `none`으로 처리하고 `index.version`을 유지한다.
+- `patch`·`minor` 변경은 같은 변경 PR에서 `index.version`을 갱신한다. 버전 숫자만 바꾸는 후속 PR을 만들지 않는다.
+- tag·Release는 PR 병합 후 사용자가 요청한 단계에서 발행한다. 발행 전에는 같은 버전의 중복 tag·Release가 없는지 확인한다.
+
+커밋·push·PR 생성·tag·Release 발행은 각각 별도 동작입니다. 앞 단계를 요청받았다고 다음 단계까지 실행하지 않습니다. 이미 요청받은 단계는 재확인하지 않습니다.
 
 ## 작업 절차
 
-1. 변경 범위를 확인한다.
-2. GitHub Release 최신 tag와 `index.md`의 `version`을 비교한다. 불일치 시 [[wiki-sync]]의 "원격 버전 동기화"를 따른다.
-3. 이 문서 기준으로 `minor` / `patch`를 고른다.
-4. `index.md`의 `version`과 `updated`를 갱신한다.
-5. [20_wiki/log.md](/20_wiki/log.md)에 날짜·작성자·이전 버전·새 버전·bump 이유를 최신 항목으로 추가한다(단일 파일, 최신순, 형식은 [[log-writing-guide]]).
-6. 작업 브랜치에 커밋 → push → MR 생성([[mr-pr-guide]] 위키 MR 템플릿). `main` 직접 커밋 금지.
-7. MR은 **반드시 squash merge**한다. 머지로 `main`이 갱신된 뒤 `vX.Y.Z` tag 생성(`v` + index의 `version`) → tag push.
-8. GitHub Release를 만든다. 제목은 tag와 같게, 본문에는 해당 날짜 log의 버전 변경 요약을 압축해 적는다.
+1. [[wiki-sync]]에 따라 원격 상태를 확인한다. 최신 GitHub Release와 `index.version`이 다르면 새 버전을 만들지 말고 미발행 버전인지 먼저 확인한다.
+2. 실제 변경 범위로 `none` / `patch` / `minor`를 판단한다. 단순 질문처럼 기록 대상 결과가 없으면 파일 변경 없이 종료한다.
+3. [[log-writing-guide]]에 따라 변경 단위 worklog에 bump 종류와 이유를 남긴다. `patch`·`minor`면 이전 버전과 새 버전도 함께 기록한다.
+4. `patch`·`minor`면 같은 작업 브랜치에서 `index.version`·`updated_at`·`updated_by`·`audit_log`를 갱신한다. `none`이면 버전을 바꾸지 않는다.
+5. 작업 브랜치 → PR → 사용자 squash merge로 반영한다. 커밋·push·PR은 사용자 요청·승인 범위에서만 실행하며 `main` 직접 커밋 금지. 에이전트는 merge·auto-merge를 실행하지 않는다.
+6. 병합 후 tag·Release 요청을 받으면 squash merge 커밋의 `index.version`을 확인한다. 그 커밋에 `vX.Y.Z` tag를 붙이고 같은 이름의 GitHub Release를 만든다. 별도 릴리즈 준비 PR을 만들거나 병합하지 않는다.
+7. Release 본문은 해당 버전 worklog의 변경 내용을 요약한다. 발행 실패 시 같은 버전·커밋에서 재개하고 새 버전을 중복 발급하지 않는다.
 
 ## 1.0.0 기준
 
 아래를 만족하면 `1.0.0` 검토 가능.
 
-- `AGENTS.md`와 주요 `에이전트 지침 파일 작성 가이드`가 팀 공유 방식까지 포함.
+- `AGENTS.md`와 주요 `에이전트 지침 파일 작성 가이드`가 개인 프로젝트 연동 방식까지 포함.
 - `index.md`가 핵심 문서를 빠짐없이 가리킴.
 - 주요 문서가 출처·플랫폼·상태를 가짐.
 - 링크 lint 기준이 정해져 있고 큰 깨짐 없음.

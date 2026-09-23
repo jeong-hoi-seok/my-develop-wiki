@@ -4,10 +4,10 @@ title: 목차
 aliases: [목차]
 type: index
 status: active
-version: "0.27.0"
+version: "0.28.0"
 created_at: 2026-06-19
 created_by: 정회석
-updated_at: 2026-07-30
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
@@ -103,79 +103,92 @@ audit_log:
   - action: updated
     at: 2026-07-13
     by: 정회석
-    note: "frontend-wiki 전체 이관, 프로젝트명 my-develop-wiki 변경, version 0.25.0"
+    note: "기존 자료 전체 이관, 프로젝트명 my-develop-wiki 변경, version 0.25.0"
   - action: updated
     at: 2026-07-30
     by: 정회석
-    note: "frontend-wiki 재싱크 — lint-format js/ts.* 키 교체·mr-pr-guide 템플릿 사용 절·릴리즈 MR 제목 반영, 위키 실체 경로를 ~/my-develop-wiki로 정정(project/ 제거), version 0.26.0"
+    note: "기존 자료 재싱크 — lint-format js/ts.* 키 교체·mr-pr-guide 템플릿 사용 절·릴리즈 MR 제목 반영, 위키 실체 경로를 ~/my-develop-wiki로 정정(project/ 제거), version 0.26.0"
   - action: updated
     at: 2026-07-30
     by: 정회석
     note: "개인 위키 브랜치 전략을 main+dev 단일 전략으로 정리, 제품 prod/dev 트랙·hotfix·dionz 출처 제거, agent-instruction-guide·mr-pr-guide 참조 정합, version 0.27.0"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "개인 범위 전체 대조, worklog 구조·도구 의존 제거·GitHub 운영 반영, version 0.28.0"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "과거 로그 6항목 이관·구버전 삭제 안내와 개인 문서 표현 정리"
 tags: [wiki, index]
 stack: common
 scope: wiki-index
+source:
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations: []
 ---
-
 # my-develop-wiki
 
-유일한 진입점. 모든 작업·질문 전에 아래 필수 작업을 **순서대로** 끝낸 뒤 목차로 넘어간다.
+개인 개발 지식과 판단 기준의 진입점입니다. 실제 프로젝트의 지침과 개인 기준을 우선합니다.
 
-## 시작 전 필수 (순서대로)
+## 시작 전 필수
 
-1. **원격 동기화** — [[wiki-sync]]를 따라 GitHub Release 최신 tag와 이 문서 `version` 일치를 확인한다.
-2. **context7 설치 확인** — 각 에이전트가 자기 환경에 맞는 방법으로 연결을 확인하고, 미설치면 [[context7-instruction-guide]] 설치 절차를 따른다. 라이브러리·프레임워크 문서는 위키가 아니라 context7으로 조회한다.
-3. **superpowers 설치 확인** — 미설치면 [[superpowers-instruction-guide]] 설치 절차를 따른다. 이미 있으면 그대로 둔다. 실행은 개별 프로젝트에서만 한다.
-4. **Conventions·Operations 선행 학습** — 아래 목차의 Conventions·Operations 문서를 직접 열어 읽는다. 모든 작업·커밋·문서 변경의 전제.
+1. **원격 상태 확인**: [[wiki-sync]]에 따라 GitHub Release·`origin/main`·현재 버전을 비교합니다. 작업 중 미발행 버전과 동기화 누락을 구분합니다.
+2. **Context7 연결 확인**: [[context7-instruction-guide]]에 따라 연결을 확인합니다. 라이브러리 문서는 대상 버전에 맞춰 조회합니다.
+3. **Conventions·Operations 선행 학습**: 아래 문서를 직접 읽습니다. 개인 프로젝트에 적용할 때는 그 프로젝트의 지침·도구·지원 범위를 먼저 확인합니다.
 
-저장소 운영 규칙 SSOT는 루트 `AGENTS.md`.
+저장소 운영 규칙은 [AGENTS.md](/AGENTS.md)가 기준입니다.
 
-## 목차
+## 구조
 
-### 구조
-
+```text
+00_context/          개인 글쓰기·사고방식
+10_raw/              원본 보관소
+20_wiki/
+  ├ principles/      원칙·기술 선택 기준
+  ├ conventions/     개발 전용 규칙
+  ├ operations/      작성·Git·에이전트 운영
+  └ index.md         이 목차
+docs/worklog/
+  ├ README.md        작성·조회 안내
+  └ YYYY-MM/
+      └ YYYY-MM-DD-<주제>-<식별자>.md
+README.md            저장소 소개
 ```
-00_context/   개인 정적 기준 (글쓰기·사고방식)
-10_raw/       원본 보관소 (라이브러리 문서 금지 — context7로 조회)
-20_wiki/      LLM 정리본
-  ├ principles/   원칙·기준 — 아키텍처·기술 선택 이유
-  ├ conventions/  개발 전용 컨벤션 — 네이밍·코드 리뷰
-  ├ operations/   운영 규약·가이드 — 개발 외에서도 쓰는 규칙 (커밋·MR·위키·에이전트)
-  ├ index.md      이 목차 (유일한 진입점)
-  └ log.md        작업 이력 (최신순)
-```
 
-> **범위** — 버저닝이 있는 라이브러리·프레임워크 문서는 위키에 두지 않는다. 최신 문서는 **context7**으로 조회한다. 위키엔 시간이 지나도 유효한 **원칙·기준·선택 이유**만 남긴다.
+분류는 아래 목차가 기준입니다. 지식 폴더는 세 개를 유지합니다. 라이브러리·프레임워크의 버전별 사용법은 저장하지 않고 Context7으로 조회하며, 선택 기준과 이유만 남깁니다.
 
-### Principles (원칙 · 기준)
+## Principles
 
-- [[expo-sdk-version]] `[앱]` — Expo Go 중지와 54 이후 SDK 버전 선택 기준
+- [[expo-sdk-version]]: 개인 앱의 안정 SDK 선택·development build 판단 기준. `[앱]`
 
-### Conventions (개발 전용 컨벤션)
+## Conventions
 
-> 개발에만 국한된 규칙. 모두 `[공통]`.
+개발에 적용하는 공통 기준입니다. 도구 설정 예시는 대상 프로젝트의 호환성을 확인해 적용합니다.
 
-- [[naming-convention]] — 변수·함수·파일 네이밍 규칙
-- [[lint-format]] — 팀 공통 ESLint+Prettier 표준, 전 프로젝트 범용 베이스, import 정렬은 Prettier 담당
-- [[git-hooks]] — Husky 규격화, pre-commit은 nano-staged 린트·포맷, pre-push는 typecheck
-- [[package-manager]] — 사내 표준 pnpm 최신 버전, npm·yarn 시도 시 실행 직전 확인
-- [[node-version]] — 권장 Node 24 LTS, `.nvmrc`·`engines` 고정, 타 버전 시도 시 실행 직전 확인
-- [[code-review]] — 리뷰 요청 시 code-review-graph 필수 사용(미설치 시 설치)·코드 품질 4기준(가독성·예측 가능성·응집도·결합도)·접근성·디버깅
+- [[naming-convention]]: 파일·식별자 네이밍.
+- [[lint-format]]: ESLint·Prettier 역할 분리와 개인 프로젝트 기본 설정.
+- [[git-hooks]]: Husky·nano-staged·typecheck, 코드 프로젝트의 커밋·push 검증.
+- [[package-manager]]: 개인 JS/TS 프로젝트 pnpm 기본값과 기존 매니저 존중.
+- [[node-version]]: Node LTS 선택·프로젝트 버전 고정.
+- [[code-review]]: code-review-graph 사용과 코드 품질·접근성·디버깅 판단.
 
-### Operations (운영 규약·가이드)
+## Operations
 
-> 개발 외에서도 쓰이는 규약·가이드. 커밋·MR·위키 작성·버전·동기화·에이전트 연동. 모두 `[공통]`.
+개발 외에도 사용하는 작성·운영 기준입니다.
 
-- [[commit-convention]] — `type(scope): subject` 커밋 메시지 규칙 (코드·위키 공용)
-- [[mr-pr-guide]] — GitLab MR / GitHub PR 작성 절차 (위키 MR 템플릿 포함)
-- [[branch-strategy]] — git 브랜치 전략 (main · dev 두 브랜치, 작업 브랜치 → MR)
+- [[commit-convention]]: 한국어 `type(scope): subject` 커밋 메시지.
+- [[mr-pr-guide]]: GitHub PR·GitLab MR 작성과 개인 위키 PR 템플릿.
+- [[branch-strategy]]: 이 위키의 `main` 운영과 개인 프로젝트의 `main`·`dev` 구분.
+- [[context7-instruction-guide]]: 라이브러리 문서 조회와 위키의 역할 분리.
+- [[wiki-authoring-guide]]: 파일명·frontmatter·출처·링크 표준.
+- [[log-writing-guide]]: 개인 위키 worklog 적용과 과거 로그 보존.
+- [[worklog-writing-guide]]: 변경 단위 기록·경량 메타데이터·선택적 조회.
+- [[wiki-versioning]]: 기록 전용 변경 제외·같은 변경에서 버전 확정·요청된 tag와 Release 발행.
+- [[wiki-sync]]: 로컬·`origin/main`·GitHub Release 비교.
+- [[project-wiki-guide]]: 개인 프로젝트의 기록 도입·전환·원문 보존.
+- [[agent-instruction-guide]]: 프로젝트 지침·위키 연동·도구 활용.
 
-- [[context7-instruction-guide]] `context7 사용 가이드` — 라이브러리·프레임워크 문서는 위키 저장 대신 context7(MCP) 조회
-- [[wiki-authoring-guide]] `위키 작성 가이드` — 파일명(영문 kebab-case)·frontmatter(id·status·audit_log·relations 등)·경로 표기 표준
-- [[log-writing-guide]] `로그 작성 규칙` — log·worklog 작성·압축 표준 (일자 기준·간결·괄호 금지·주간→월간 압축)
-- [[wiki-versioning]] — `version` 올리는 기준·절차
-- [[wiki-sync]] — 로컬↔원격(`origin/main`) 동기화
-- [[project-wiki-guide]] — 개별 프로젝트는 `docs/raw/`(선택)·`docs/worklog.md`(필수)만
-- [[agent-instruction-guide]] — 프로젝트 `AGENTS.md` 작성·위키 부트스트랩
-- [[superpowers-instruction-guide]] `superpowers 사용 가이드` — 개별 프로젝트 전용 프로세스 스킬 플러그인, 설치·gitignore·우선 호출 규칙
+## 기록 조회
+
+현재·과거 기록 모두 `/docs/worklog/`에서 조회합니다. 작성·검색은 [docs/worklog/README.md](/docs/worklog/README.md)를 따르며, 개별 기록은 이 목차에 추가하지 않습니다.

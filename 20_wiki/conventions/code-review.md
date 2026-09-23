@@ -6,7 +6,7 @@ type: convention
 status: draft
 created_at: 2026-06-19
 created_by: 정회석
-updated_at: 2026-07-02
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
@@ -27,12 +27,21 @@ audit_log:
     at: 2026-07-02
     by: 정회석
     note: "im-not-ai 윤문으로 명사 종결 문장 1곳 자연화"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "code-review-graph와 판단 기준 유지, 디버깅 기록 목적을 개인 사용에 맞게 조정"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사용자 요청에 따른 외부 저장소 식별정보와 비교 문구 제거"
 tags: [frontend, code-review, code-quality, readability, predictability, cohesion, coupling, a11y, debug, principles, code-review-graph]
 stack: common
 scope: code-review
 source:
-  - https://context7.com/toss/frontend-fundamentals
-  - https://context7.com/tirth8205/code-review-graph
+  - "https://context7.com/toss/frontend-fundamentals"
+  - "https://context7.com/tirth8205/code-review-graph"
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations:
   - id: convention-naming-convention
     label: depends-on
@@ -41,7 +50,6 @@ relations:
   - id: operation-mr-pr-guide
     label: depends-on
 ---
-
 # 코드 리뷰
 
 > 리뷰 **실행 절차**(code-review-graph)와 **판단 기준**(코드 품질 4기준·접근성·디버깅)을 한 문서로 묶은 컨벤션. 각 판단 기준은 요약 + context7 포인터다. 세부 예제·코드는 context7 https://context7.com/toss/frontend-fundamentals 에서 조회한다([[context7-instruction-guide]]). 관련: [[mr-pr-guide]]
@@ -187,7 +195,7 @@ code-review-graph build            # 코드베이스 파싱 (500파일 ≈ 10초
 
 - **진단** — 에러 메시지로 검색하기 전에 원인을 좁힌다(호출·의존 맵으로 범위 특정).
 - **수정** — 증상 아닌 **근본 원인**(임시방편은 재발). 데드코드 제거(디버깅 방해), 비즈니스 로직을 순수 함수로 분리(독립 테스트).
-- **예방** — 에러 로그 상세화(버전·기기·재현 조건), 버그 리포트 기록·팀 공유로 재발 방지.
+- **예방** — 에러 로그 상세화(버전·기기·재현 조건), 버그 원인·재현 조건·수정 근거를 작업 기록에 남겨 재발 방지.
 
 → context7: https://context7.com/toss/frontend-fundamentals — debug 토픽, diagnose·fix·prevent
 

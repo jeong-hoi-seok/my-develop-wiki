@@ -6,7 +6,7 @@ type: operation
 status: active
 created_at: 2026-07-01
 created_by: 정회석
-updated_at: 2026-07-10
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
@@ -35,9 +35,19 @@ audit_log:
     at: 2026-07-10
     by: 정회석
     note: "파일명 예시에서 expo 항목을 log-writing-guide로 교체"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "worklog 경량 메타데이터·README 예외·과거 기록 보존 기준 반영"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사용자 요청에 따른 외부 저장소 식별정보와 비교 문구 제거"
 tags: [common, convention, wiki]
 stack: common
 scope: wiki-authoring
+source:
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations:
   - id: operation-wiki-versioning
     label: related
@@ -46,17 +56,19 @@ relations:
   - id: operation-project-wiki-guide
     label: related
 ---
-
 # wiki-authoring-guide
 
 ## 한 줄 요약
 
-모든 위키 문서의 **파일명·frontmatter·경로 표기 표준**. my-develop-wiki(`/20_wiki/`·`/00_context/`)와 개별 프로젝트(`docs/`) 위키 양쪽에 적용한다. 개별 프로젝트의 `docs/raw/` 원본 보관소는 예외.
+일반 위키 문서의 **파일명·frontmatter·경로 표기 표준**입니다. my-develop-wiki와 소비 프로젝트의 위키 문서에 적용하며, 원본 보관소와 작업 기록은 아래 예외를 따릅니다.
 
 ## 적용 범위
 
-- **적용** — my-develop-wiki의 `/20_wiki/`·`/00_context/`, 개별 프로젝트 `docs/`의 위키 문서(worklog 등).
-- **예외** — 개별 프로젝트의 `docs/raw/` 원본 보관소. 원본이라 강제하지 않는다.
+- **적용**: my-develop-wiki의 `/20_wiki/`·`/00_context/`, 소비 프로젝트 `docs/`의 일반 위키 문서.
+- **원본 예외**: my-develop-wiki의 `/10_raw/`와 소비 프로젝트의 `docs/raw/`. 원본에 문서 형식 강제 없음.
+- **작업 기록 예외**: my-develop-wiki와 소비 프로젝트 모두 `docs/worklog/`의 경로·파일명·본문·frontmatter·기록 간 관계는 [[worklog-writing-guide]] 적용. 전체 위키 메타데이터 요구 없음.
+- **안내 파일 예외**: 루트 `README.md`와 `docs/worklog/README.md`는 [[project-wiki-guide]]의 고정 안내 형식 적용. frontmatter 불필요.
+- **기존 기록**: 과거 단일 파일·날짜별 로그·옛 메타데이터에 새 형식을 일괄 소급 적용하지 않음. 구버전 감지·미병합 기록 이관·원문 보존은 [[project-wiki-guide]]의 마이그레이션 절차 적용.
 
 ## 문서 기본 구조
 
@@ -185,7 +197,7 @@ relations:
 | type | 용도 |
 |---|---|
 | `index` | 진입점 목차 (`index.md`) |
-| `log` | 작업 이력 (`log.md`, 프로젝트 `worklog.md`) |
+| `log` | 구버전 이력 문서에만 사용. 신규 worklog는 별도 경량 형식 |
 | `concept` | 지식·개념·아키텍처 |
 | `decision` | 기술 선택·결정 이유 |
 | `convention` | 개발 산출물에 적용하는 규칙 (`/20_wiki/conventions/`) |
@@ -219,7 +231,7 @@ my-develop-wiki 안에 실제로 존재하는 **파일**을 언급하면 백틱�
 
 링크를 걸 파일이 이 저장소에 없으므로 링크 금지. 그대로 백틱.
 
-- 소비 프로젝트의 파일: `docs/worklog.md`, `.gitignore`
+- 소비 프로젝트의 파일: `docs/worklog/README.md`, `.gitignore`
 - 일반 코드 예시: `android/`, `shared/api`, `app/`
 - git 참조: `origin/main`, `vX.Y.Z`
 
@@ -244,7 +256,7 @@ my-develop-wiki 안에 실제로 존재하는 **파일**을 언급하면 백틱�
 1. `git mv`로 영어 kebab-case로 rename.
 2. frontmatter에 `title`(한글)·`aliases`(한글) 추가하고 `updated_at`·`audit_log` 갱신.
 3. 인바운드 `[[한글]]` 링크는 `aliases`로 자동 해결되지만, 가능하면 `[[영문]]`으로 갱신해 일관성을 유지한다.
-4. `index.md`·`log.md` 참조를 갱신하고, 링크 lint로 깨짐 0을 확인한다.
+4. `index.md`와 현재 안내 문서의 참조를 갱신하고 해당 worklog에 변경 기록을 남긴다. 과거 기록은 수정하지 않으며, 기존 경로 참조는 새 기록에 이전·새 경로를 남겨 추적한다. 링크 lint로 현재 안내의 깨짐 0을 확인한다.
 
 ## 관련
 [[wiki-versioning]] · [[agent-instruction-guide]] · [[project-wiki-guide]]

@@ -6,7 +6,7 @@ type: convention
 status: active
 created_at: 2026-07-07
 created_by: 정회석
-updated_at: 2026-07-07
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
@@ -17,47 +17,59 @@ audit_log:
     at: 2026-07-07
     by: 정회석
     note: "em dash 기호를 쉼표·콜론으로 대체"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사내 일괄 표준을 개인 기본값으로 조정, 고정 버전·기존 매니저·승인 범위 존중"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사용자 요청에 따른 외부 저장소 식별정보와 비교 문구 제거"
 tags: [common, convention, package-manager, pnpm]
 stack: common
 scope: package-manager
+source:
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations: []
 ---
-
 # 패키지 매니저
 
 ## 한 줄 요약
 
-사내 JS/TS 프로젝트의 표준 패키지 매니저는 **pnpm 최신 안정 버전** 하나다. npm·yarn 명령은 실행 직전 사용자에게 확인 없이 쓰지 않는다.
+개인 JS/TS 프로젝트의 기본 패키지 매니저는 **pnpm**입니다. 신규 프로젝트는 호환되는 안정 버전을 고정하고, 기존 프로젝트는 채택한 매니저와 lockfile을 우선합니다.
 
-## 표준
+## 기준
 
-- 설치·실행·스크립트 전부 pnpm 기준: `pnpm install`·`pnpm add`·`pnpm dlx`.
-- 최신 안정 버전을 쓴다 (2026-07-07 기준 11.10.0, 정확한 최신값은 registry로 재확인).
-- 신규 프로젝트는 `package.json`의 `packageManager` 필드로 버전을 고정한다 (corepack 연동).
-- lockfile은 `pnpm-lock.yaml`만 커밋한다. `package-lock.json`·`yarn.lock`은 커밋 금지.
+- 설치·추가·스크립트 실행 예시는 pnpm을 기본으로 씁니다.
+- 신규 프로젝트는 도입 시점의 안정 버전과 Node·프레임워크 호환성을 확인한 뒤 `package.json`의 `packageManager`에 정확한 버전을 남깁니다. 매 실행마다 최신 버전으로 바꾸지 않습니다.
+- pnpm을 채택한 프로젝트는 `pnpm-lock.yaml`을 커밋합니다. 다른 매니저의 lockfile을 함께 만들지 않습니다.
+- 기존 `package-lock.json`·`yarn.lock`은 전환 요청 없이 삭제·변환하지 않습니다.
+- 프레임워크가 호환 버전을 선택하는 설치 명령을 제공하면 그 절차를 사용하되, 프로젝트의 패키지 매니저를 유지합니다.
 
-## 에이전트 지침 (필수)
+## 에이전트 적용
 
-1. 의존성 설치·추가·스크립트 실행의 기본값은 pnpm. 명령 예시를 보여줄 때도 pnpm 기준으로 쓴다.
-2. npm·yarn 명령을 실행해야 하는 상황(사용자 요청 포함)이면 **실행 직전 선택지형으로 확인한다**. 예: `npm으로 진행할까요? [pnpm으로 전환 / npm 그대로 진행]`
-3. 기존 프로젝트에서 `package-lock.json`·`yarn.lock`을 발견하면 pnpm 전환 여부를 먼저 묻는다. 임의로 lockfile을 삭제·변환하지 않는다.
-4. 프로젝트 `AGENTS.md`가 다른 매니저를 명시하면 그 프로젝트 규칙이 우선한다.
+1. `AGENTS.md`·`packageManager`·lockfile·실제 설치 환경부터 확인합니다.
+2. pnpm 사용을 요청받았거나 프로젝트가 이미 채택했다면 재확인 없이 사용합니다.
+3. npm·yarn으로 전환이 필요한데 요청·프로젝트 규칙이 없다면 이유와 선택지를 제시합니다. 이미 명시된 매니저를 다시 확인하지 않습니다.
+4. 매니저 변경·버전 업그레이드·lockfile 재생성은 실제 변경 범위로 다루고 검증 결과를 worklog에 남깁니다.
 
 ## 명령 대응표
 
 | 용도 | pnpm |
-| --- | --- |
+|---|---|
 | 의존성 설치 | `pnpm install` |
-| 패키지 추가 | `pnpm add <pkg>` (`-D` 개발 의존성) |
+| 패키지 추가 | `pnpm add <pkg>` |
+| 개발 의존성 추가 | `pnpm add -D <pkg>` |
 | 패키지 제거 | `pnpm remove <pkg>` |
-| 스크립트 실행 | `pnpm run <script>` 또는 `pnpm <script>` |
-| 일회성 실행 (npx 대응) | `pnpm dlx <pkg>` |
+| 스크립트 실행 | `pnpm run <script>` |
+| 일회성 실행 | `pnpm dlx <pkg>` |
 
 ## 관련 문서
 
-- [[agent-instruction-guide]]: 프로젝트 `AGENTS.md` 템플릿에 매니저 명시 위치
+- [[node-version]]
+- [[agent-instruction-guide]]
 
 ## 출처
 
-- 팀 결정 (2026-07-07): 사내 전 프로젝트 pnpm 통일
-- pnpm 최신 버전: https://registry.npmjs.org/pnpm/latest (2026-07-07 기준 11.10.0)
+- 기존 my-develop-wiki의 pnpm 기본값을 유지하고 개인 프로젝트 적용 범위 조정, 2026-09-23.
+- [pnpm 설치·호환 안내](https://pnpm.io/installation). 정확한 버전은 설치 시 조회.

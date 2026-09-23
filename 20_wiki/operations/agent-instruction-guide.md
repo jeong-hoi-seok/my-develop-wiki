@@ -6,7 +6,7 @@ type: operation
 status: draft
 created_at: 2026-06-19
 created_by: 정회석
-updated_at: 2026-07-07
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
@@ -43,130 +43,120 @@ audit_log:
     at: 2026-07-07
     by: 정회석
     note: "템플릿 git 규칙을 보호 브랜치 일반화, branch-strategy 문서 참조 추가 — main 단일 가정 제거"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "개인 프로젝트 지침·안전한 링크 연동·변경 단위 기록 반영, superpowers 의존 제거"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사용자 요청에 따른 외부 저장소 식별정보와 비교 문구 제거"
 tags: [common, convention, agent]
 stack: common
 scope: agent-instruction-authoring
+source:
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations:
   - id: operation-project-wiki-guide
     label: related
 ---
-
 # 에이전트 지침 파일 작성 가이드
 
-각 프로젝트의 **에이전트 지침 파일**(`AGENTS.md`·`CLAUDE.md`)을 작성·수정하고, 공통 위키를 연동하는 방법.
+## 한 줄 요약
 
-## 실행 흐름
+개인 프로젝트는 `~/my-develop-wiki`를 심볼릭링크로 참조하고, 실제 적용할 규칙은 프로젝트 `AGENTS.md`에 적습니다. 기록 도입과 기존 기록 전환은 [[project-wiki-guide]]를 따릅니다.
 
-```mermaid
-flowchart TD
-    A[작업 시작] --> B{"위키 실체<br/>$HOME/my-develop-wiki 있나?"}
-    B -- 없음 --> C["git clone<br/>→ $HOME/my-develop-wiki"]
-    B -- 있음 --> D
-    C --> D{"프로젝트 루트<br/>./my-develop-wiki 링크 있나?"}
-    D -- 없음 --> E["심볼릭링크 생성<br/>+ .gitignore 등록"]
-    D -- 있음 --> F
-    E --> F{"./my-develop-wiki/20_wiki/index.md<br/>열리나?"}
-    F -- 아니오 --> G[링크·클론 재점검 후 중단]
-    F -- 예 --> H[index.md 읽고 작업 시작]
-    H --> I["'개별 프로젝트 위키<br/>만들까요?' 묻기"]
-```
+## 지침 파일
 
-## 지침 파일은 2개뿐
+| 파일 | 역할 |
+|---|---|
+| `AGENTS.md` | 프로젝트 지침의 단일 기준. 위키 경로·실행 명령·브랜치·기록 방식을 명시 |
+| `CLAUDE.md` | `AGENTS.md`를 읽는 포인터 |
 
-프로젝트 지침은 **`AGENTS.md`와 `CLAUDE.md` 두 파일만** 둔다.
-
-| 파일          | 역할                                  | git |
-| ----------- | ----------------------------------- | --- |
-| `AGENTS.md` | 지침의 단일 기준(SSOT). 모든 규칙·절차는 여기에만.    | 커밋  |
-| `CLAUDE.md` | `AGENTS.md`를 따르라는 짧은 포인터. 내용 중복 금지. | 커밋  |
-
-- 같은 내용을 두 곳에 쓰면 어긋나 지침이 표류한다. `CLAUDE.md`는 요약조차 두지 않고 `AGENTS.md`를 가리키기만 한다.
-- **이미 있는 파일은 덮어쓰지 않는다.** 필요한 내용만 추가 기재하고, 추가분을 **반드시 사용자에게 알린다.**
-
-`CLAUDE.md`를 생성할 때는 아래 **한 줄만** 넣는다. Claude Code가 `@경로` import로 `AGENTS.md`를 그대로 로드하므로 다른 문장은 두지 않는다.
+기존 지침은 읽고 필요한 부분만 반영합니다. 프로젝트 고유 규칙을 템플릿으로 덮어쓰지 않고, 바꾼 내용을 사용자에게 알립니다. `CLAUDE.md`를 새로 만들 때는 아래 한 줄을 사용합니다.
 
 ```md
 @AGENTS.md
 ```
 
-## `AGENTS.md`에 넣을 내용
-
-**정말 간단하게** 쓴다. 핵심은 공통 위키를 가리키는 것과 git 규칙뿐이다. 상세 연동 절차는 아래 "위키 연동"을 가리키기만 하고 복붙하지 않는다.
+## AGENTS.md 예시
 
 ```md
 # AGENTS.md
 
-이 프로젝트의 모든 에이전트는 공통 위키를 참조해 작업한다.
+모든 답변은 한국어로 작성한다. 개인 공통 기준은 my-develop-wiki를 참조하며,
+이 프로젝트의 명시적 규칙이 우선한다.
 
-- 연동돼 있으면 `./my-develop-wiki/20_wiki/index.md`를 직접 열어 읽는다.
-- 아직 연동 안 됐으면 위키 `20_wiki/operations/agent-instruction-guide.md`의
-  "위키 연동" 절차를 따라 연동한 뒤 진행한다.
-- index를 읽은 뒤 `./my-develop-wiki/20_wiki/conventions/`·`./my-develop-wiki/20_wiki/operations/`
-  문서를 **선행 학습한다(필수).**
+- `./my-develop-wiki/20_wiki/index.md`를 먼저 읽는다.
+- 미연동이면 위키의 `20_wiki/operations/agent-instruction-guide.md`에 따라 연동한다.
+- index의 conventions·operations를 읽고 현재 프로젝트에 적용되는 기준을 확인한다.
 
-## git 규칙 (필수)
+## Git
 
-보호 브랜치(`main`·`dev`)에 직접 커밋·push 금지(예외 없음). "커밋/푸시 해줘"만 말해도 묻지 말고 작업 브랜치부터 만든다.
-브랜치 전략은 `./my-develop-wiki/20_wiki/operations/branch-strategy.md`를 따른다 —
-`main`·`dev` 두 브랜치를 쓰고 변경은 작업 브랜치 → MR로 반영한다.
-커밋 전 `git branch --show-current`로 확인하고, 보호 브랜치면
-작업 브랜치를 만들어 이동한 뒤 진행한다. 반영은 작업 브랜치 → PR/MR.
+실제 브랜치와 프로젝트 전략을 확인한다. 보호 브랜치에 직접 커밋·push하지 않는다.
+커밋 전에 현재 브랜치를 확인하고 필요하면 작업 브랜치로 이동한다.
+브랜치 기준은 `./my-develop-wiki/20_wiki/operations/branch-strategy.md`를 참조한다.
+커밋·push·PR/MR·tag·Release는 요청받은 단계만 실행한다.
+병합은 사용자가 직접 수행하며 에이전트는 merge·auto-merge를 실행하지 않는다.
 
-## 작업 기록 (필수)
+## 작업 기록
 
-작업이 끝나면 `./my-develop-wiki/20_wiki/operations/project-wiki-guide.md`를 따라
-작업 내용을 `docs/worklog.md`에 기재한다.
+도입·기존 기록 전환은 `./my-develop-wiki/20_wiki/operations/project-wiki-guide.md`를 따른다.
+도입 후 기록 대상 결과가 생기면 `./my-develop-wiki/20_wiki/operations/worklog-writing-guide.md`에 따라
+`docs/worklog/YYYY-MM/YYYY-MM-DD-<주제>-<식별자>.md`에 남긴다.
+PR/MR 또는 독립 변경 하나당 기록 하나를 사용한다. 단순 조회·설명·상태 확인은 기록하지 않는다.
+같은 변경의 미병합 기록을 재사용하며, 과거 맥락은 관련 메타데이터·본문만 검색한다.
+구버전 기록은 프로젝트에 명시한 경로에서 보존하고 새 기록과 함께 조회한다.
 
-## MR / PR (필수)
+## PR / MR
 
-사용자가 MR/PR 작성을 요청하면 `./my-develop-wiki/20_wiki/operations/mr-pr-guide.md`를
-반드시 먼저 읽고 숙지한 뒤 절차대로 작성한다.
+작성 요청을 받으면 `./my-develop-wiki/20_wiki/operations/mr-pr-guide.md`를 먼저 읽고
+source·target·실제 diff·기존 요청 중복을 확인한 뒤 작성한다.
 
-## 도구 활용
+## 도구
 
-- 라이브러리·프레임워크 문서 검색은 **context7**(MCP)을 우선 활용한다.
-  사용법·설치는 `./my-develop-wiki/20_wiki/operations/context7-instruction-guide.md`를 따른다.
-- 개발은 **superpowers** 프로세스 스킬 사용을 권장한다. 설치되어 있지 않으면
-  `./my-develop-wiki/20_wiki/operations/superpowers-instruction-guide.md`의 설치 절차를 참고한다.
+라이브러리·프레임워크 문서는 Context7으로 대상 버전에 맞춰 조회한다.
+사용자 지시와 프로젝트에서 채택한 도구·설정을 우선한다.
+코드 리뷰 요청은 `./my-develop-wiki/20_wiki/conventions/code-review.md`를 따른다.
 ```
 
-> **git 규칙은 예외가 없다.** 변경량이 작거나 "빨리"·"바로" 요청이어도 `main` 직접 커밋·push 안 한다. 이미 기본 브랜치에 커밋했으면 push 전에 중단하고 사용자에게 알린다. 프로젝트 자체 커밋 컨벤션이 있으면 그 문서를 가리키되 이 절대 규칙은 빠뜨리지 않는다.
+프로젝트가 실제 채택한 브랜치·패키지 매니저·실행 명령은 이 예시 아래에 구체적으로 적습니다. 위키를 연동했다는 이유로 기존 프로젝트의 도구나 브랜치를 바꾸지 않습니다.
 
 ## 위키 연동
 
-위키 실체는 **`$HOME/my-develop-wiki` 한 곳**에만 둔다. 프로젝트마다 복제하지 않는다. 프로젝트 루트에는 그곳을 가리키는 심볼릭링크 **`./my-develop-wiki`**만 만들고, 항상 상대경로 `./my-develop-wiki/...`로 읽는다. (`$HOME`·`~`·절대경로를 읽기 도구에 넘기지 않는다 — 링크가 머신 차이를 흡수한다.)
+1. `$HOME/my-develop-wiki`가 실제 위키 저장소인지 확인합니다. 없을 때만 아래 원격에서 clone합니다. 같은 이름의 다른 폴더가 있으면 덮어쓰지 않고 상태를 확인합니다.
 
-- repo: `https://github.com/jeong-hoi-seok/my-develop-wiki.git`
-- 읽기 진입점: `./my-develop-wiki/20_wiki/index.md`
+   ```sh
+   git clone https://github.com/jeong-hoi-seok/my-develop-wiki.git "$HOME/my-develop-wiki"
+   ```
 
-위 다이어그램 순서대로 현재 상태를 판별해 처리한다.
+2. 소비 프로젝트 루트의 `my-develop-wiki` 경로를 확인합니다. 올바른 링크가 있으면 재사용하고, 경로가 없을 때만 생성합니다. 파일·디렉터리나 다른 링크가 있으면 강제 덮어쓰기 없이 대상부터 확인합니다. 위키 저장소 자체 안에는 자기 자신을 가리키는 링크를 만들지 않습니다.
 
-**① 위키가 아예 없음** — clone부터.
+   ```sh
+   # macOS / Linux / WSL, 링크 경로가 없는 경우
+   ln -s "$HOME/my-develop-wiki" ./my-develop-wiki
+   ```
 
-```bash
-git clone https://github.com/jeong-hoi-seok/my-develop-wiki.git "$HOME/my-develop-wiki"
-```
+   ```powershell
+   # Windows PowerShell, 링크 경로가 없는 경우
+   New-Item -ItemType SymbolicLink -Path .\my-develop-wiki -Target "$HOME\my-develop-wiki"
+   ```
 
-**② 위키는 있는데 링크 미설정** — 프로젝트 루트에서 링크 생성.
+3. 소비 프로젝트의 `.gitignore`에 링크와 로컬 도구 산출물 제외 항목을 유지합니다. 아래 산출물 제외는 도구 설치·사용을 요구하지 않습니다.
 
-```bash
-# macOS / Linux / WSL
-ln -sf "$HOME/my-develop-wiki" ./my-develop-wiki
-```
-```powershell
-# Windows PowerShell (관리자)
-New-Item -Force -ItemType SymbolicLink -Path .\my-develop-wiki -Target "$HOME\my-develop-wiki"
-```
+   ```gitignore
+   my-develop-wiki
+   docs/superpowers/
+   .superpowers/
+   ```
 
-- 프로젝트 `.gitignore`에 아래를 등록한다. `my-develop-wiki` 링크는 머신마다 재생성되고, superpowers 산출물은 git에 올리지 않는다([[superpowers-instruction-guide]]).
+4. `./my-develop-wiki/20_wiki/index.md`가 실제로 열리는지 확인합니다. 링크 존재만으로 검증을 대신하지 않습니다. 실패하면 원인과 미확인 범위를 보고하고 링크 복구 전에는 연동 완료로 처리하지 않습니다.
+5. [[wiki-sync]]에 따라 원격 상태를 확인하고 index를 읽습니다. [[project-wiki-guide]]에 따라 아직 승인되지 않은 기록 도입·전환만 확인합니다. 이미 요청·프로젝트 규칙으로 승인된 방식은 재확인 없이 적용합니다.
 
-  ```gitignore
-  my-develop-wiki
-  docs/superpowers/
-  .superpowers/
-  ```
-- `./my-develop-wiki/20_wiki/index.md`가 실제로 열리는지 검증한다(링크 존재만으로 갈음 금지).
+## 관련 문서
 
-**③ 연동 완료** — `index.md`가 바로 열리면 superpowers 설치를 확인하고(`claude plugin list | grep -i superpowers`, 미설치면 [[superpowers-instruction-guide]] 설치 절차, 이미 있으면 그대로) 그 문서를 읽고 작업을 시작한다. (필요 시 `git -C "$HOME/my-develop-wiki" pull --ff-only`로 최신화.) 이어서 사용자에게 **"개별 프로젝트 위키도 지금 만들까요?"**라고 물어본다([[project-wiki-guide]]).
-
-clone·링크·검증 중 하나라도 실패하면 사실을 말하고 중단한다.
+- [[project-wiki-guide]]
+- [[worklog-writing-guide]]
+- [[branch-strategy]]
+- [[context7-instruction-guide]]
+- [[code-review]]

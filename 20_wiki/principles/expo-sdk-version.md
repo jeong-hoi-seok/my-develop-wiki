@@ -6,7 +6,7 @@ type: decision
 status: active
 created_at: 2026-06-19
 created_by: 정회석
-updated_at: 2026-07-10
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
@@ -23,56 +23,63 @@ audit_log:
     at: 2026-07-10
     by: 정회석
     note: "54 고정 문서를 버전 운용 문서로 개편. Expo Go 사용 중지와 SDK 56 업그레이드 결정 반영, 파일명 expo-sdk-54-pinning에서 변경"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "회사 SDK 채택·짝수 선호·Expo Go 금지 대신 개인 앱의 안정 버전·호환성 판단 기준 반영"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사용자 요청에 따른 외부 저장소 식별정보와 비교 문구 제거"
 tags: [frontend, react-native, expo, versioning]
 stack: app
 scope: expo-sdk-version
-source: "https://expo.dev/changelog/sdk-56, https://docs.expo.dev/develop/development-builds/expo-go-to-dev-build (조회 2026-07-10)"
+source:
+  - "https://expo.dev/changelog/sdk-56, https://docs.expo.dev/develop/development-builds/expo-go-to-dev-build (조회 2026-07-10)"
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations: []
 ---
-
 # Expo SDK 버전
 
 ## 한 줄 요약
 
-팀 표준 Expo SDK는 **56**이다. Expo Go 사용을 중지하면서 54에 고정할 이유가 사라졌다. 이후로는 짝수 SDK를 안정화 버전으로 보고 따라간다.
-
-## 54와 그 이후의 차이
-
-SDK 54는 두 경계의 마지막 버전이다. 우리가 54에 고정했던 이유도 이 둘이었다.
-
-1. **스토어 Expo Go 마지막 지원 SDK.** App Store의 Expo Go는 54까지 실행한다. 55 이상은 TestFlight 베타나 development build가 필요하다. 조사 2026-06 기준.
-2. **Legacy Architecture 마지막 SDK.** 54는 React Native 0.81 기반. 55부터 New Architecture 전용이다.
-
-## 우리팀이 Expo Go를 쓰지 않는 이유
-
-- **포함된 네이티브 모듈만 쓸 수 있다.** 커스텀 네이티브 모듈 추가 불가. TaskManager는 Android에서 아예 동작하지 않는다.
-- **개발 환경과 배포 환경이 다르다.** 배포는 네이티브 빌드로 나가므로, Expo Go에서 되던 것이 빌드에서 깨지는 문제를 늦게 발견한다.
-- **공식 권장도 development build다.** Expo는 Expo Go를 교육·빠른 시작 도구로 규정한다.
-
-그래서 2026-07-10 회의에서 Expo Go 중지를 결정했다. 개발 테스트는 `expo-dev-client` 기반 development build로 한다.
-
-## 그러면 54를 쓸 이유가 없다
-
-1. development build는 프로젝트 SDK를 그대로 담아 빌드한다. 스토어 Expo Go 버전과 맞출 필요가 없다.
-2. 레거시 아키텍처는 유예일 뿐이다. 55 이상은 New Architecture 전용이라 미룰수록 전환 부채만 쌓인다. 54의 critical fix 지원도 2026년 9~10월경 끝난다.
+개인 앱은 의존성·네이티브 빌드 호환성을 확인한 안정 SDK를 선택합니다. 채택한 SDK는 각 프로젝트의 설정과 검증 결과로 관리합니다.
 
 ## 버전 선택 기준
 
-- **짝수 SDK를 쓴다.** 팀은 짝수 버전을 안정화 버전으로 판단해 선호한다. 이 문서 작성일 기준 최신은 57이지만 56을 쓴다.
-- **패치는 고정하지 않는다.** `~56.0.x` 범위로 두고 패치 업데이트를 수용한다.
-- SDK 56 = React Native 0.85, React 19.2.3. context7 조회 2026-07-10.
+- 새 프로젝트는 공식 안정 릴리즈와 주요 의존성 지원 상태를 함께 확인합니다. 기존 프로젝트는 현재 SDK와 업그레이드 필요부터 확인합니다.
+- 짝수·홀수라는 이유만으로 안정성을 판단하지 않습니다. 공식 지원 정책과 프로젝트의 호환성 검증을 기준으로 판단합니다.
+- 업그레이드는 한 단계씩 진행하고 해당 SDK의 변경 사항·호환 버전을 조회합니다. 정확한 설치 절차는 [[context7-instruction-guide]]에 따라 공식 문서를 확인합니다.
+- 채택한 SDK·버전 범위·실제 해결된 의존성은 프로젝트 설정과 lockfile로 관리합니다. 변경 이유·검증 결과는 해당 프로젝트 worklog에 남깁니다.
+- 구버전에 머물면 막는 의존성·지원 조건·다음 확인 시점을 기록합니다. beta·canary는 별도 실험 목적이 있을 때만 검토합니다.
+
+## Expo Go와 development build
+
+Expo Go는 학습·빠른 기능 확인에 사용할 수 있습니다. 네이티브 의존성·설정이 필요한 개인 앱과 배포를 목표로 하는 앱은 development build를 기본으로 검토합니다. 공식 문서도 production 앱에 development build를 권장합니다.
+
+이 선택은 Expo Go의 전면 금지가 아닙니다. 프로젝트가 필요한 네이티브 모듈을 포함할 수 있는지, 빌드와 실제 기기에서 확인해야 할 동작이 무엇인지로 판단합니다. development build를 사용했다는 사실만으로 배포 빌드 검증이 끝난 것은 아닙니다.
+
+## 프로젝트에 남길 근거
+
+- 현재·대상 SDK와 주요 네이티브 의존성의 호환 여부.
+- 빌드·타입 검사·관련 기능 테스트 결과와 남은 문제.
+- 시뮬레이터·실기기·배포 빌드 중 확인한 범위.
+- 업그레이드를 보류했다면 이유와 재검토 조건.
 
 ## 트레이드오프
 
-| 택한 것 | 포기한 것 |
+| 선택 | 비용·조건 |
 |---|---|
-| 최신 기능·보안 패치, New Architecture 전환 완료 | 스토어 Expo Go 즉시 테스트 편의 |
-| 개발·배포 환경 일치 | development build 셋업 비용, Apple Developer 멤버십 |
-| 업그레이드 부채 해소 | New Architecture 미대응 의존성 대응 비용 |
+| 호환성이 확인된 안정 SDK 채택 | 최신 기능 도입이 늦어질 수 있음 |
+| development build 사용 | 네이티브 빌드·설치·재빌드 관리 필요 |
+| 단계적 업그레이드 | 여러 단계의 검증 시간 필요 |
+
+## 관련 문서
+
+- [[context7-instruction-guide]]
+- [[worklog-writing-guide]]
 
 ## 출처
 
-- Expo SDK 56 changelog: https://expo.dev/changelog/sdk-56
-- Expo Go에서 development build로 이전: https://docs.expo.dev/develop/development-builds/expo-go-to-dev-build
-- Expo SDK 릴리즈 케이던스·유지보수 기간: https://expo.dev/changelog/sdk-57
-- Expo Go and the App Store (May 2026): https://expo.dev/changelog/expo-go-and-app-store-may-2026
+- [Expo SDK 업그레이드 안내](https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/), 2026-09-23 확인. 단계적 업그레이드와 development build 권장.
+- [Expo SDK 공식 레퍼런스](https://docs.expo.dev/versions/latest/), 2026-09-23 확인. SDK별 호환 관계와 prerelease 구분.

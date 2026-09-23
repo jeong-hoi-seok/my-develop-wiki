@@ -6,7 +6,7 @@ type: operation
 status: active
 created_at: 2026-07-02
 created_by: 정회석
-updated_at: 2026-07-10
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
@@ -40,68 +40,60 @@ audit_log:
     at: 2026-07-10
     by: 정회석
     note: "expo 버전 문서 참조·relations 제거, 운영 가이드에서 특정 기술 결정 분리"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "개인 판단과 공식 문서 역할 구분, 대상 버전 조회·실제 연결 확인 기준 반영"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사용자 요청에 따른 외부 저장소 식별정보와 비교 문구 제거"
 tags: [common, operation, context7, mcp, docs]
 stack: common
 scope: context7-instruction
-source: "https://context7.com, https://github.com/upstash/context7"
+source:
+  - "https://context7.com, https://github.com/upstash/context7"
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations:
   - id: operation-wiki-authoring-guide
     label: related
 ---
-
-# context7-instruction-guide
+# Context7 사용 가이드
 
 ## 한 줄 요약
 
-버저닝이 있는 라이브러리·프레임워크 문서는 위키에 저장하지 않고 **context7**(MCP)으로 최신 버전 문서를 조회한다.
+버전별 라이브러리·프레임워크 문서는 Context7으로 조회하고, 위키에는 개인적으로 채택한 기준과 이유를 남깁니다. 최신 문서와 현재 프로젝트 버전의 문서를 구분합니다.
 
-## 왜 쓰나
+## 연결 확인
 
-- 라이브러리 문서를 위키에 복사하면 버전이 바뀔 때마다 갱신해야 한다. 그 관리 비용을 없앤다.
-- context7은 라이브러리의 **버전별 공식 문서·코드 예제**를 MCP 도구로 제공한다. 항상 최신을 조회하므로 위키 쪽 버저닝 관리가 필요 없다.
+- 사용하는 에이전트의 MCP 등록·연결 상태 또는 실제 도구 호출로 확인합니다. 등록 목록에 보이는 것만으로 정상 연결을 단정하지 않습니다.
+- 미설정이면 [Context7 공식 안내](https://github.com/upstash/context7)의 해당 에이전트 설치 절차를 확인합니다. 이미 연결된 환경은 재설치하지 않습니다.
+- 설치 후 실제 조회로 재확인합니다. 연결 실패 시 원인과 문서 조회 한계를 보고합니다. 공식 문서를 직접 확인했다면 조회 경로를 남기고 Context7 결과처럼 쓰지 않습니다.
 
-## 설치 (필수)
+## 조회 순서
 
-index 시작 전 필수 단계다. **반드시 추측하지 말고 터미널에서 확인한다.**
+1. 프로젝트의 패키지 버전·lockfile·질문 범위를 확인합니다.
+2. `resolve-library-id`로 공식 문서에 맞는 라이브러리 ID를 찾고 `query-docs`로 필요한 주제와 버전을 조회합니다. 도구 이름은 에이전트에 노출된 실제 이름을 따릅니다.
+3. 해당 버전이 제공되지 않거나 결과가 부족하면 버전을 명시해 공식 문서를 확인합니다. 최신 예제를 구버전에 맞는 것처럼 적용하지 않습니다.
+4. 조회한 라이브러리·버전·출처를 판단 근거로 남깁니다. 사용법 원문을 위키에 복제하지 않습니다.
 
-### 1. 설치 확인
+## 역할 분리
 
-**각 에이전트가 자기 환경에 맞는 방법으로 context7 MCP 서버의 등록·연결 상태를 확인한다.** 에이전트마다 MCP 확인 방법이 다르므로 특정 명령을 정하지 않는다.
+| 대상 | 보관·조회 내용 |
+|---|---|
+| my-develop-wiki | 개인 기준·선택 이유·재사용할 컨벤션 |
+| 소비 프로젝트 지침·worklog | 해당 프로젝트의 실제 결정·설정·검증 |
+| Context7·공식 문서 | 버전별 API·사용법·지원 조건 |
 
-- 연결 확인되면 정상. 설치 단계를 건너뛴다.
-- 미설치·미연결이면 → 아래 설치 실행.
-
-### 2. 설치 실행
-
-```bash
-npx ctx7 setup    # 대화형 — 안내에 따라 사용 중인 에이전트를 선택
-```
-
-에이전트별 비대화형 플래그가 필요하면 `npx ctx7 setup --help`로 확인한다.
-
-### 3. 재확인
-
-설치 후 1번과 같은 방식으로 다시 연결 상태를 확인한다. 실패하면 에디터·세션을 재시작한 뒤 다시 확인하고, 그래도 실패면 사용자에게 보고하고 중단한다.
-
-### 4. 이 위키와의 역할 분리
-
-|      | my-develop-wiki  | Context7         |
-| ---- | -------------- | ---------------- |
-| 담는 것 | 판단·기준·컨벤션·기술결정 | 라이브러리 사실 API·사용법 |
-| 성격   | 팀이 정한 의견·규칙    | 공식 문서 레퍼런스       |
-| 갱신   | 수동, 드묾         | 자동, 최신           |
-
-## 사용법
-
-1. 에이전트가 라이브러리 문서가 필요하면 context7 도구로 해당 라이브러리를 찾아서 버전에 맞는 문서를 조회(get-docs)한다.
-2. 조회 결과는 위키에 저장하지 않는다. 저장할 가치가 있는 건 문서 자체가 아니라 **그 기술을 쓰기로 한 판단**이며, 그건 `/20_wiki/principles/`에 남긴다.
-3. 위키 문서에서 라이브러리 문서를 참조할 땐 저장소 경로가 아니라 **context7 URL**을 링크한다.
+Context7은 문서 조회 도구이며 프로젝트 설정이나 지원 여부를 대신 검증하지 않습니다. 판단을 위키에 남길 때는 공식 사실과 개인 선택을 구분합니다.
 
 ## 관련 문서
 
 - [[wiki-authoring-guide]]
+- [[project-wiki-guide]]
 
 ## 출처
 
-- https://context7.com
-- https://github.com/upstash/context7
+- [Context7](https://context7.com)
+- [Context7 공식 저장소](https://github.com/upstash/context7)
+- 2026-09-23 이 환경의 `resolve_library_id`·`query_docs` 실제 호출로 연결 확인.
