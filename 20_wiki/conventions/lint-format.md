@@ -6,7 +6,7 @@ type: convention
 status: active
 created_at: 2026-07-10
 created_by: 정회석
-updated_at: 2026-07-13
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
@@ -17,23 +17,31 @@ audit_log:
     at: 2026-07-13
     by: 정회석
     note: "VSCode deprecated 설정 typescript.tsdk를 js/ts.tsdk.path로 교체, 워크스페이스 TS 승인 프롬프트 설정 추가"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "ESLint·Prettier 베이스를 개인 프로젝트에 한정, 호환성과 과거 검증의 범위 명시"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사용자 요청에 따른 외부 저장소 식별정보와 비교 문구 제거"
 tags: [common, convention, eslint, prettier, lint, format]
 stack: common
 scope: lint-format
 source:
   - "https://typescript-eslint.io/rules/consistent-type-imports (조회 2026-07-10)"
   - "microsoft/vscode extensions/typescript-language-features/package.json (조회 2026-07-13)"
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations:
   - id: convention-naming-convention
     label: related
     note: "네이밍 자동 검증도 린트가 담당"
 ---
-
 # 린트·포맷 컨벤션
 
 ## 한 줄 요약
 
-팀 공통 린터는 **ESLint + Prettier**다. 이 문서는 개발 프로젝트 전부에 적용하는 **범용 베이스**만 정한다. 프레임워크 전용 규칙은 각 프로젝트가 이 베이스 위에 알아서 얹는다.
+개인 JS/TS 프로젝트의 기본 조합은 **ESLint + Prettier**다. 새 설정을 만들 때 참고할 베이스이며, 기존 프로젝트의 설정과 프레임워크 호환성을 먼저 확인한다. Markdown만 있는 위키에 이 도구 전체를 설치하지 않는다.
 
 ## 원칙
 
@@ -47,11 +55,11 @@ relations:
 - **ESLint 10**: 코드 품질 검사. JS 린트 생태계 표준이고, 10부터 flat config 전용이라 설정 방식이 하나로 통일된다.
 - **Prettier 3**: 코드 포맷. 스타일 논쟁을 도구로 종결한다. import 정렬 플러그인 최신 버전이 3을 요구한다.
 
-메이저만 고정하고 마이너·패치는 최신 안정을 따른다. 플러그인들은 두 메이저와의 peerDependencies 호환을 확인하고 설치한다. 2026-07-10 npm registry 기준 아래 설정의 플러그인 전부 호환 확인함.
+아래는 기존 베이스의 메이저 기준이다. 실제 설치 시 프레임워크 설정·플러그인의 peerDependencies와 프로젝트 검사를 확인한다. 호환되는 메이저가 다르면 해당 버전과 이유를 프로젝트에 남기며, 이 문서만 보고 일괄 업그레이드하지 않는다. 2026-07-10의 호환 확인은 당시 기록이며 현재 조합의 검증을 대신하지 않는다.
 
 ## Prettier
 
-기본값과 같은 옵션도 전부 명시한다. 개인 설정이 다른 사람에게도 같은 결과를 강제하고, 메이저 업그레이드로 기본값이 바뀌어도 팀 스타일이 유지된다.
+기본값과 같은 옵션도 전부 명시한다. 기기·에디터가 바뀌어도 같은 결과를 얻고, 도구 기본값 변경이 프로젝트 스타일을 바꾸지 않게 한다.
 
 ```js
 const config = {
@@ -141,7 +149,7 @@ export const sharedConfig = [
 ];
 ```
 
-`eslint-plugin-prettier`는 쓰지 않는다. Prettier를 ESLint fix로 실행하면 정렬 플러그인의 텍스트 이동 fix와 no-duplicates 병합 fix가 같은 import 블록에서 충돌해, `eslint --fix` 한 번에 **사용 중인 import가 조용히 삭제되는 것을 재현으로 확인했다.** 2026-07-10 검증. 충돌 규칙 해제는 `eslint-config-prettier`가 담당하고, 포맷 실행은 에디터 저장과 CI의 Prettier가 직접 한다.
+`eslint-plugin-prettier`는 쓰지 않는다. Prettier를 ESLint fix로 실행하면 정렬 플러그인의 텍스트 이동 fix와 no-duplicates 병합 fix가 같은 import 블록에서 충돌해, `eslint --fix` 한 번에 **사용 중인 import가 삭제된 2026-07-10 재현 기록을 근거로 분리했다.** 이번 문서 정리에서 해당 조합을 다시 재현한 것은 아니다. 충돌 규칙 해제는 `eslint-config-prettier`가 담당하고, 포맷 실행은 에디터 저장과 CI의 Prettier가 직접 한다.
 
 ### 구성 블록 설명
 
@@ -186,7 +194,7 @@ pnpm add -D eslint @eslint/js typescript-eslint \
 | `eslint.config.mjs` | 위 ESLint 설정 | 커밋 |
 | `prettier.config.mjs` | 위 Prettier 설정 | 커밋 |
 | `.prettierignore` | 아래 ignore | 커밋 |
-| `.vscode/settings.json` | 아래 VSCode 설정 | 커밋. 팀 전체가 같은 에디터 동작을 공유한다 |
+| `.vscode/settings.json` | 아래 VSCode 설정 | 커밋. 기기마다 같은 프로젝트 에디터 동작을 재현한다 |
 | `.vscode/extensions.json` | 아래 확장 권장 목록 | 커밋. 프로젝트 열 때 VSCode가 설치를 권유한다 |
 
 ### ignore
@@ -237,7 +245,7 @@ pnpm-lock.yaml
 }
 ```
 
-VSCode가 JS·TS 설정을 `js/ts.*` 네임스페이스로 통합하면서 `typescript.tsdk`와 `typescript.enablePromptUseWorkspaceTsdk`는 deprecated 됐다. 옛 키도 아직 동작하지만 설정 파일에 경고가 표시된다. 구버전 VSCode를 쓰는 팀원이 있으면 과도기 동안 옛 키를 함께 둬도 된다.
+VSCode가 JS·TS 설정을 `js/ts.*` 네임스페이스로 통합하면서 `typescript.tsdk`와 `typescript.enablePromptUseWorkspaceTsdk`는 deprecated 됐다. 옛 키도 아직 동작하지만 설정 파일에 경고가 표시된다. 다른 기기에서 구버전 VSCode를 쓰면 과도기 동안 옛 키를 함께 둬도 된다.
 
 확장이 없으면 위 설정은 아무 동작도 하지 않는다. `.vscode/extensions.json`을 함께 커밋해 설치를 유도한다.
 
@@ -256,7 +264,7 @@ VSCode가 JS·TS 설정을 `js/ts.*` 네임스페이스로 통합하면서 `type
 | `eslint.workingDirectories: auto` | ESLint 실행 기준 폴더를 자동 인식. 하위 폴더에 별도 설정이 있는 구조에서도 동작 |
 | `js/ts.tsdk.path` | 에디터가 내장 TS 대신 프로젝트에 설치된 TS 버전을 쓴다. 버전 차이로 인한 오탐 방지 |
 | `js/ts.tsdk.promptToUseWorkspaceVersion` | 워크스페이스 TS 버전 사용을 물어보는 프롬프트 표시. 워크스페이스 tsdk는 보안상 사용자가 승인해야 적용되므로 이 프롬프트로 전환을 유도한다 |
-| `prettier.requireConfig` | Prettier 설정 파일이 있는 프로젝트에서만 포맷 동작. 팀 설정 없는 곳에서 확장 기본값으로 제멋대로 바꾸는 사고 방지 |
+| `prettier.requireConfig` | Prettier 설정 파일이 있는 프로젝트에서만 포맷 동작. 프로젝트 설정 없는 곳에서 확장 기본값으로 제멋대로 바꾸는 사고 방지 |
 
 
 ## 관련 문서

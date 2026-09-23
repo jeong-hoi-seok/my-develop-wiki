@@ -6,28 +6,41 @@ type: convention
 status: active
 created_at: 2026-07-10
 created_by: 정회석
-updated_at: 2026-07-10
+updated_at: 2026-09-23
 updated_by: 정회석
 audit_log:
   - action: created
     at: 2026-07-10
     by: 정회석
     note: "2026-07-10 프론트팀 회의 결정. Husky 규격화, pre-commit nano-staged, pre-push typecheck"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "개인 코드 프로젝트에 hook 적용 범위 한정, 기존 도구·런타임·검사 존중"
+  - action: updated
+    at: 2026-09-23
+    by: 정회석
+    note: "사용자 요청에 따른 외부 저장소 식별정보와 비교 문구 제거"
 tags: [common, convention, git, husky, nano-staged, hook]
 stack: common
 scope: git-hooks
-source: "https://typicode.github.io/husky, https://github.com/usmanyunusov/nano-staged (조회 2026-07-10)"
+source:
+  - "https://typicode.github.io/husky, https://github.com/usmanyunusov/nano-staged (조회 2026-07-10)"
+  - "사용자 개인 위키 개선 요청, 2026-09-23"
 relations:
   - id: convention-lint-format
     label: depends-on
     note: "pre-commit이 lint-format의 ESLint·Prettier 설정을 실행한다"
 ---
-
 # Git Hook 컨벤션
 
 ## 한 줄 요약
 
-git hook은 **Husky**로 규격화한다. pre-commit은 **nano-staged**가 staged 파일만 린트·포맷하고, pre-push는 **typecheck**를 돌린다.
+개인 JS/TS 프로젝트가 Git hook을 도입할 때는 **Husky**와 **nano-staged**를 기본으로 쓴다. pre-commit은 staged 파일의 린트·포맷, pre-push는 프로젝트가 정의한 **typecheck**를 실행한다. 기존 hook은 프로젝트 규칙을 우선하며, 코드가 없는 위키에는 이 구성을 일괄 설치하지 않는다.
+
+## 적용 범위
+
+프로젝트에 해당 검사 스크립트가 있을 때만 연결한다. TypeScript를 쓰지 않는 프로젝트에 typecheck를 형식적으로 추가하지 않는다. hook은 로컬 검증이며, 채택한 CI 검사를 대신하지 않는다. 아래 예시는 nvm을 쓰는 환경 기준이므로 다른 버전 관리자는 해당 프로젝트에 맞춘다.
 
 ## 셋업
 
